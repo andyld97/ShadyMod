@@ -1,5 +1,6 @@
 ﻿using GameNetcodeStuff;
 using ShadyMod.Model;
+using ShadyMod.Network;
 using ShadyMod.Patches;
 using UnityEngine;
 
@@ -51,7 +52,8 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                NetworkObjectManager.SendEventToClients(nm.ToString());
+                // NetworkObjectManager.SendEventToClients(nm.ToString());
+                PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
             if (!force)
@@ -82,7 +84,8 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                NetworkObjectManager.SendEventToClients(nm.ToString());
+                // NetworkObjectManager.SendEventToClients(nm.ToString());
+                PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
             if (!force)
@@ -136,7 +139,8 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                NetworkObjectManager.SendEventToClients(nm.ToString());
+                // NetworkObjectManager.SendEventToClients(nm.ToString());
+                PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
             if (!force)
@@ -166,7 +170,8 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                NetworkObjectManager.SendEventToClients(nm.ToString());
+                // NetworkObjectManager.SendEventToClients(nm.ToString());
+                PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
             if (!force)

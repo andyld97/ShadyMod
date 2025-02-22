@@ -3,13 +3,17 @@ using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
 using ShadyMod.Model;
+using ShadyMod.Network;
 using ShadyMod.Perks;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 namespace ShadyMod;
 
@@ -45,6 +49,17 @@ public class ShadyMod : BaseUnityPlugin
         { "jedon", "JedonFT" },
         { "patrick", "kxmischFxC" }
     };
+
+    //private readonly static Dictionary<string, string> SteamNameMapping = new Dictionary<string, string>()
+    //{
+    //    { "belebt", "Player #0" },
+    //    { "paul", "vette" },
+    //    { "lasse", "Lasse" },
+    //    { "aveloth", "aveloth" },
+    //    { "andy", "Player #1" },
+    //    { "jedon", "JedonFT" },
+    //    { "patrick", "kxmischFxC" }
+    //};
 
     #endregion
 
@@ -92,9 +107,8 @@ public class ShadyMod : BaseUnityPlugin
         On.GameNetcodeStuff.PlayerControllerB.Update += PlayerControllerB_Update;
         On.GameNetcodeStuff.PlayerControllerB.BeginGrabObject += PlayerControllerB_BeginGrabObject;
         On.GameNetcodeStuff.PlayerControllerB.SwitchToItemSlot += PlayerControllerB_SwitchToItemSlot;
-        On.GameNetcodeStuff.PlayerControllerB.ThrowObjectClientRpc += PlayerControllerB_ThrowObjectClientRpc;
-        On.GameNetcodeStuff.PlayerControllerB.ThrowObjectServerRpc += PlayerControllerB_ThrowObjectServerRpc;
         On.GameNetcodeStuff.PlayerControllerB.ActivateItem_performed += PlayerControllerB_ActivateItem_performed;
+        On.GameNetcodeStuff.PlayerControllerB.DiscardHeldObject += PlayerControllerB_DiscardHeldObject;
 
         Logger.LogInfo($"#### {MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
@@ -103,16 +117,11 @@ public class ShadyMod : BaseUnityPlugin
 
     #region Player Events
 
-    private void PlayerControllerB_ThrowObjectServerRpc(On.GameNetcodeStuff.PlayerControllerB.orig_ThrowObjectServerRpc orig, GameNetcodeStuff.PlayerControllerB self, Unity.Netcode.NetworkObjectReference grabbedObject, bool droppedInElevator, bool droppedInShipRoom, Vector3 targetFloorPosition, int floorYRot)
+    private void PlayerControllerB_DiscardHeldObject(On.GameNetcodeStuff.PlayerControllerB.orig_DiscardHeldObject orig, PlayerControllerB self, bool placeObject, NetworkObject parentObjectTo, Vector3 placePosition, bool matchRotationOfParent)
     {
-        orig(self, grabbedObject, droppedInElevator, droppedInShipRoom, targetFloorPosition, floorYRot);
-        // DisablePerks(self); --> Scheint Probleme zu machen, daher erstmal mit Client machen!
-    }
-
-    private void PlayerControllerB_ThrowObjectClientRpc(On.GameNetcodeStuff.PlayerControllerB.orig_ThrowObjectClientRpc orig, GameNetcodeStuff.PlayerControllerB self, bool droppedInElevator, bool droppedInShipRoom, Vector3 targetFloorPosition, Unity.Netcode.NetworkObjectReference grabbedObject, int floorYRot)
-    {
-        orig(self, droppedInElevator, droppedInShipRoom, targetFloorPosition, grabbedObject, floorYRot);
+        orig(self, placeObject, parentObjectTo, placePosition, matchRotationOfParent);
         DisablePerks(self);
+        lastPlayerActionPerformed = false;
     }
 
     private void PlayerControllerB_SwitchToItemSlot(On.GameNetcodeStuff.PlayerControllerB.orig_SwitchToItemSlot orig, GameNetcodeStuff.PlayerControllerB self, int slot, GrabbableObject fillSlotWithItem)
@@ -158,7 +167,7 @@ public class ShadyMod : BaseUnityPlugin
             ];
 
             isInitalized = true;
-            Logger.LogInfo("#### Shady Mod Initalization complemeted!");
+            Logger.LogInfo("#### Shady Mod Initialization complemeted!");
         }
         else
         {
@@ -206,12 +215,16 @@ public class ShadyMod : BaseUnityPlugin
 
             if (itemSearchName.Contains("donout"))
             {
-                // TODO: Spieler rng in die Luft teleporiern (10-20 Y Random) oder stamina wieder auffüllen
-                Logger.LogDebug("#### Player executing donout action (TEST)!");
+                if (StartOfRound.Instance.inShipPhase)
+                    return;
 
-                // TODO: Item zerstören
+                Logger.LogDebug("#### Player executing donout action!");
 
-                lastPlayerActionPerformed = true;               
+                HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
+                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + Helper.GetRandomNumber(10,20), self.transform.position.z));      
+
+                lastPlayerActionPerformed = true;
+                self.DestroyItemInSlotAndSync(self.currentItemSlot);
                 return;
             }
 
@@ -221,24 +234,41 @@ public class ShadyMod : BaseUnityPlugin
 
                 // Search for player with the given target name
                 bool found = false;
-                foreach (var obj in NetworkManager.Singleton.SpawnManager.SpawnedObjects)
+
+                for (int i = 0; i < StartOfRound.Instance.allPlayerObjects.Length; i++)
                 {
-                    var playerController = obj.Value.GetComponent<PlayerControllerB>();
-                    if (playerController == null)
-                        continue;
+                    var player = StartOfRound.Instance.allPlayerScripts[i];
 
-                    if (playerController.playerUsername.Contains(targetPlayerName, StringComparison.OrdinalIgnoreCase))
+                    if (player.playerUsername.Contains(targetPlayerName, StringComparison.OrdinalIgnoreCase))
                     {
-                        Logger.LogDebug($"#### Player found: {playerController.playerUsername} ...");
+                        if (player.playerUsername == GameNetworkManager.Instance.localPlayerController.playerUsername)
+                            continue;
 
-                        // Teleport to the player
-                        Logger.LogDebug($"#### Teleporting player {playerController.playerUsername} [ServerPos: {playerController.serverPlayerPosition.FormatVector3()}\n\n OldPlayerPos: {playerController.oldPlayerPosition.FormatVector3()}]");
-                        self.TeleportPlayer(playerController.serverPlayerPosition);
+                        Logger.LogDebug($"#### Player found: {player.playerUsername} ...");
 
-                        // TODO
-                        // NotServerException: Only the server can reparent NetworkObjects
-                        // Scheinbar darf das Teleportieren der Person nur über den Server ausgeführt werden, sprich NetCode!
+                        if (player.isPlayerDead)
+                        {
+                            bool killCurrentPlayer = true;
 
+                            if (self.deadBody != null)
+                                killCurrentPlayer = Helper.GetRandomBoolean();
+
+                            if (killCurrentPlayer)
+                                self.KillPlayer(Vector3.zero, false, CauseOfDeath.Fan);
+                            else
+                            {
+                                HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
+                                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.deadBody.spawnPosition);
+                            }
+                        }
+                        else
+                        {
+                            // Teleport to the player
+                            Logger.LogDebug($"#### Teleporting player {player.playerUsername} [ServerPos: {player.serverPlayerPosition.FormatVector3()}\n\n OldPlayerPos: {player.oldPlayerPosition.FormatVector3()}\n\nTransform-POS: {player.transform.position}]");
+
+                            HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
+                            PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.transform.position);
+                        }
 
                         found = true;
                         break;
@@ -248,11 +278,7 @@ public class ShadyMod : BaseUnityPlugin
                 if (!found)
                 {
                     Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
-
-                    // TODO: Hier ist die später, dass wenn kein Spieler gefunden wird, oder noch besser, wenn festgestellt wird, dass der Spieler
-                    // deadge ist, dass man dann selbst auch getötet wird!
-                    // Idee von belebt war noch, dass man evtl. auch zur Leiche teleportiert wird (es gibt ja auch die DeathPosition)
-
+                    self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     return;
                 }
             }
@@ -261,7 +287,7 @@ public class ShadyMod : BaseUnityPlugin
 
             // TODO: Später soll das Item hier zerstört werden, nach einmaliger Benutzung,
             // aber das wäre erstmal nervig zum Testen, daher erstmal auskommentiert:
-            // self.DestroyItemInSlotServerRpc(self.currentItemSlot);
+            // self.DestroyItemInSlotAndSync(self.currentItemSlot);
         }
     }
 
@@ -280,16 +306,16 @@ public class ShadyMod : BaseUnityPlugin
         {
             if (p.ShouldApply(player, item))
             {
-                Logger.LogInfo($"[PERK]: Applying perk {p.Name} ...");
+                Logger.LogDebug($"[PERK]: Applying perk {p.Name} ...");
                 p.Apply(player);
             }
         });      
     }
 
-    private void DisablePerks(PlayerControllerB player)
+    private void DisablePerks(PlayerControllerB player, bool force = false)
     {
-        Logger.LogInfo("[PERK]: Disabling all perks...");
-        Perks.ForEach(p => p.Reset(player));
+        Logger.LogDebug("[PERK]: Disabling all perks...");
+        Perks.ForEach(p => p.Reset(player, force));
         lastPlayerActionPerformed = false;
     }
 

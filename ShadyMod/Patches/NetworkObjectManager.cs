@@ -47,15 +47,16 @@ namespace ShadyMod.Patches
             PerkNetworkHandler.MessageEvent -= ReceivedEventFromServer;
         }
 
-        static void ReceivedEventFromServer(string eventName)
+        static void ReceivedEventFromServer(string json)
         {
-            Debug.Log($"Recieved event from server: {eventName}");
+            Debug.Log($"Recieved event from server: {json}");
 
-            NetworkMessage? nm = JsonConvert.DeserializeObject<NetworkMessage>(eventName);
+            NetworkMessage? nm = JsonConvert.DeserializeObject<NetworkMessage>(json);
             if (nm != null)
             {
                 Debug.Log($"Action to execute is: {nm.Action}");
 
+                // TODO: Hier auch mit PlayerObjects arbeiten.
                 foreach (var kvp in NetworkManager.Singleton.SpawnManager.SpawnedObjects)
                 {
                     var playerController = kvp.Value.GetComponent<PlayerControllerB>();
