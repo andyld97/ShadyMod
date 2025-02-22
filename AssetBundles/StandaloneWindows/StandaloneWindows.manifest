@@ -1,0 +1,7 @@
+ManifestFileVersion: 0
+CRC: 3787460553
+AssetBundleManifest:
+  AssetBundleInfos:
+    Info_0:
+      Name: shady
+      Dependencies: {}
