@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1574951244
+CRC: 23527408
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: d42fa5631bbb2d003cde7402b08a0170
+    Hash: b65abbbc9eedc8a490627312f393a060
   TypeTreeHash:
     serializedVersion: 2
     Hash: e77c27623a00abe6403e053d4b2ea6f0
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: d42fa5631bbb2d003cde7402b08a0170
+    Hash: b65abbbc9eedc8a490627312f393a060
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -67,6 +67,7 @@ Assets:
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
 - Assets/AssetStore/shady/Items/head-lasse.asset
 - Assets/AssetStore/shady/Items/head-patrick.asset
+- Assets/AssetStore/shady/Items/weight.asset
 - Assets/AssetStore/shady/Items/head-paul.asset
 - Assets/AssetStore/shady/Items/donout.asset
 Dependencies: []

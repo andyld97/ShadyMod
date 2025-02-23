@@ -54,6 +54,12 @@
                 Name = "donout",
                 Rarity = 30,
             },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "weight",
+                Rarity = 30
+            }
         ];
 
         public string Name { get; set; } = string.Empty!;
