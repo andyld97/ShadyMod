@@ -6,14 +6,12 @@ using ShadyMod.Model;
 using ShadyMod.Network;
 using ShadyMod.Perks;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Reflection;
-using Unity.Mathematics;
 using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 namespace ShadyMod;
 
@@ -91,8 +89,11 @@ public class ShadyMod : BaseUnityPlugin
                 Logger.LogDebug($"#### Loading asset: {assetMeta.Name} with Rarity: {assetMeta.Rarity} ...");
                 asset.canBeGrabbedBeforeGameStart = true;
 
-                if (assetMeta.Name != "donout")
+                if (assetMeta.IsHead)
+                {
                     asset.rotationOffset = new Vector3(180, 0, 270);
+                    asset.positionOffset = new Vector3(0f, 0.322f, -0.2f);
+                }
 
                 LethalLib.Modules.NetworkPrefabs.RegisterNetworkPrefab(asset.spawnPrefab);
                 LethalLib.Modules.Items.RegisterScrap(asset, assetMeta.Rarity, assetMeta.Moons);
@@ -197,7 +198,7 @@ public class ShadyMod : BaseUnityPlugin
             if (currentItem == null)
             {
                 // Unabhängig von lastPlayerActionPerformed ausführen, um sicherzustellen, dass lastPlayerActionPerformed nur auf true gesetzt wird, wenn der richtige Zeitpunkt ist und ich an das Item vom Spieler rankomme!
-                Logger.LogDebug("#### No item found to teleport to!");
+                Logger.LogDebug("#### No item found to activate!");
                 return;
             }
 
@@ -213,20 +214,25 @@ public class ShadyMod : BaseUnityPlugin
             string itemSearchName = currentItem.name.ToLower().Replace("(clone)", string.Empty);
             Logger.LogDebug($"#### Item Search Name: {itemSearchName}");
 
-            if (itemSearchName.Contains("donout"))
+            if (itemSearchName.Contains("donut"))
             {
                 if (StartOfRound.Instance.inShipPhase)
                     return;
 
-                Logger.LogDebug("#### Player executing donout action!");
+                Logger.LogDebug("#### Player executing donut action!");
 
                 HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + Helper.GetRandomNumber(10,20), self.transform.position.z));      
+                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + Helper.GetRandomNumber(10, 20), self.transform.position.z));
+                DisablePerks(self);
 
                 lastPlayerActionPerformed = true;
                 self.DestroyItemInSlotAndSync(self.currentItemSlot);
                 return;
             }
+
+            // Check if this item is a player head
+            if (!AssetInfo.INSTANCE.Any(p => p.Name.ToLower().Contains(itemSearchName) && p.IsHead))
+                return;
 
             if (SteamNameMapping.ContainsKey(itemSearchName))
             {
@@ -259,6 +265,8 @@ public class ShadyMod : BaseUnityPlugin
                             {
                                 HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
                                 PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.deadBody.spawnPosition);
+                                DisablePerks(self);
+                                lastPlayerActionPerformed = false;
                             }
                         }
                         else
@@ -268,6 +276,8 @@ public class ShadyMod : BaseUnityPlugin
 
                             HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
                             PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.transform.position);
+                            DisablePerks(self);
+                            lastPlayerActionPerformed = false;
                         }
 
                         found = true;
@@ -278,16 +288,18 @@ public class ShadyMod : BaseUnityPlugin
                 if (!found)
                 {
                     Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
+                    DisablePerks(self);
                     self.DestroyItemInSlotAndSync(self.currentItemSlot);
+                    lastPlayerActionPerformed = false;
                     return;
                 }
             }
             else
                 Logger.LogWarning("#### Name-Mapping not found!");
 
-            // TODO: Später soll das Item hier zerstört werden, nach einmaliger Benutzung,
-            // aber das wäre erstmal nervig zum Testen, daher erstmal auskommentiert:
-            // self.DestroyItemInSlotAndSync(self.currentItemSlot);
+            self.DestroyItemInSlotAndSync(self.currentItemSlot);
+            DisablePerks(self);
+            lastPlayerActionPerformed = false;
         }
     }
 

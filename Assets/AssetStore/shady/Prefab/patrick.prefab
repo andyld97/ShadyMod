@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 6162907769969115436}
   - component: {fileID: 6322717737613750926}
   m_Layer: 22
-  m_Name: Cube
+  m_Name: ScanNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -122,7 +122,7 @@ MonoBehaviour:
   minRange: 1
   requiresLineOfSight: 1
   headerText: Patrick
-  subText: "Der G\xE4rtner (Credits: 100)"
+  subText: '[Suple] (Credits: 100)'
   scrapValue: 100
   creatureScanID: -1
   nodeType: 2
@@ -158,7 +158,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -1.2533395, y: 0.24305035, z: -0.5}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4752749095030525799}
@@ -393,7 +393,7 @@ MonoBehaviour:
   insertedBattery:
     empty: 0
     charge: 0
-  customGrabTooltip: Der mit dem gruenen Daumen
+  customGrabTooltip: Unser Gaertner
   propBody: {fileID: 0}
   propColliders: []
   originalScale: {x: 0, y: 0, z: 0}

@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 23527408
+CRC: 4059982961
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b65abbbc9eedc8a490627312f393a060
+    Hash: db14fc55cee40fc885df37ad80b4e675
   TypeTreeHash:
     serializedVersion: 2
     Hash: e77c27623a00abe6403e053d4b2ea6f0
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: b65abbbc9eedc8a490627312f393a060
+    Hash: db14fc55cee40fc885df37ad80b4e675
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -69,5 +69,5 @@ Assets:
 - Assets/AssetStore/shady/Items/head-patrick.asset
 - Assets/AssetStore/shady/Items/weight.asset
 - Assets/AssetStore/shady/Items/head-paul.asset
-- Assets/AssetStore/shady/Items/donout.asset
+- Assets/AssetStore/shady/Items/donut.asset
 Dependencies: []

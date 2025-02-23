@@ -142,7 +142,7 @@ GameObject:
   - component: {fileID: 8484399878213874137}
   - component: {fileID: 6388084114513022746}
   m_Layer: 6
-  m_Name: donout
+  m_Name: donut
   m_TagString: PhysicsProp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

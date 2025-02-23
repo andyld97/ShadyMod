@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c30496d6ae6d6f907456e10a94e01ec6, type: 3}
-  m_Name: donout
+  m_Name: donut
   m_EditorClassIdentifier: 
   itemId: 0
-  itemName: donout
+  itemName: donut
   spawnPositionTypes:
   - {fileID: 11400000, guid: 70bd1e9225a14194fad4db37c50120e4, type: 2}
   twoHanded: 0
@@ -52,7 +52,7 @@ MonoBehaviour:
   saveItemVariable: 0
   isDefensiveWeapon: 0
   toolTips:
-  - 'Eat Donout: [LMB]'
+  - 'Eat Donut: [LMB]'
   verticalOffset: 0.5
   floorYOffset: 0
   allowDroppingAheadOfPlayer: 1
