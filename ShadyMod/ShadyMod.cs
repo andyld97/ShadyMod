@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
+using LethalLib.Modules;
 using ShadyMod.Model;
 using ShadyMod.Network;
 using ShadyMod.Perks;
@@ -221,7 +222,11 @@ public class ShadyMod : BaseUnityPlugin
 
                 Logger.LogDebug("#### Player executing donut action!");
 
-                HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
+                AudioClip customClip = StartOfRound.Instance.playerJumpSFX;
+                if (customClip != null && self.movementAudio != null)
+                    self.movementAudio.PlayOneShot(customClip);
+
+                HUDManager.Instance.ShakeCamera(ScreenShakeType.Big);
                 PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + Helper.GetRandomNumber(10, 20), self.transform.position.z));
                 DisablePerks(self);
 
