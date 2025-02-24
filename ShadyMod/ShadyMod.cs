@@ -3,6 +3,7 @@ using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
 using LethalLib.Modules;
+using Newtonsoft.Json;
 using ShadyMod.Model;
 using ShadyMod.Network;
 using ShadyMod.Perks;
@@ -12,6 +13,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Unity.Netcode;
+using Unity.Profiling;
 using UnityEngine;
 
 namespace ShadyMod;
@@ -37,6 +39,8 @@ public class ShadyMod : BaseUnityPlugin
 
     private float defaultJumpForce = 0f;
     private bool lastPlayerActionPerformed = false;
+
+    private const float teleportOffset = .5f;
 
     private readonly static Dictionary<string, string> SteamNameMapping = new Dictionary<string, string>()
     {
@@ -158,14 +162,15 @@ public class ShadyMod : BaseUnityPlugin
             defaultPlayerMovementSpeed = self.movementSpeed;
             defaultPlayerScale = new Vector3(self.transform.localScale.x, self.transform.localScale.y, self.transform.localScale.z);
             defaultCameraPos = new Vector3(self.gameplayCamera.transform.localPosition.x, self.gameplayCamera.transform.localPosition.y, self.gameplayCamera.transform.localPosition.z);
-            defaultJumpForce = self.jumpForce;  
-           
-            Perks = 
+            defaultJumpForce = self.jumpForce;
+
+            Perks =
             [
                 new SprintPerk(),
                 new SpeedPerk(defaultPlayerMovementSpeed),
-                new ScaleSmallPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos), 
-                new ScaleBigPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos)    
+                new ScaleSmallPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
+                new ScaleBigPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
+                new EnemyKillPerk(),
             ];
 
             isInitalized = true;
@@ -269,7 +274,7 @@ public class ShadyMod : BaseUnityPlugin
                             else
                             {
                                 HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.deadBody.spawnPosition);
+                                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.deadBody.spawnPosition.x + teleportOffset, player.deadBody.spawnPosition.y, player.deadBody.spawnPosition.z + teleportOffset));
                                 DisablePerks(self);
                                 lastPlayerActionPerformed = false;
                             }
@@ -277,10 +282,10 @@ public class ShadyMod : BaseUnityPlugin
                         else
                         {
                             // Teleport to the player
-                            Logger.LogDebug($"#### Teleporting player {player.playerUsername} [ServerPos: {player.serverPlayerPosition.FormatVector3()}\n\n OldPlayerPos: {player.oldPlayerPosition.FormatVector3()}\n\nTransform-POS: {player.transform.position}]");
+                            Logger.LogDebug($"#### Teleporting player {player.playerUsername}");
 
                             HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                            PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, player.transform.position);
+                            PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.transform.position.x + teleportOffset, player.transform.transform.position.y, player.transform.position.z + teleportOffset));
                             DisablePerks(self);
                             lastPlayerActionPerformed = false;
                         }
