@@ -171,6 +171,7 @@ public class ShadyMod : BaseUnityPlugin
                 new ScaleSmallPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
                 new ScaleBigPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
                 new EnemyKillPerk(),
+                new EnemyStunnPerk()
             ];
 
             isInitalized = true;
@@ -232,7 +233,7 @@ public class ShadyMod : BaseUnityPlugin
                     self.movementAudio.PlayOneShot(customClip);
 
                 HUDManager.Instance.ShakeCamera(ScreenShakeType.Big);
-                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + Helper.GetRandomNumber(10, 20), self.transform.position.z));
+                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + UnityEngine.Random.Range(10, 20), self.transform.position.z));
                 DisablePerks(self);
 
                 lastPlayerActionPerformed = true;
@@ -241,7 +242,7 @@ public class ShadyMod : BaseUnityPlugin
             }
 
             // Check if this item is a player head
-            if (!AssetInfo.INSTANCE.Any(p => p.Name.ToLower().Contains(itemSearchName) && p.IsHead))
+            if (StartOfRound.Instance.inShipPhase || !AssetInfo.INSTANCE.Any(p => p.Name.ToLower().Contains(itemSearchName) && p.IsHead))
                 return;
 
             if (SteamNameMapping.ContainsKey(itemSearchName))

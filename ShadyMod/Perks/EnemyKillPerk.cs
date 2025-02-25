@@ -15,13 +15,17 @@ namespace ShadyMod.Perks
         {
             base.OnUpdate(player);
 
-            var enemys = Helper.GetNearbyEnemys(player.transform.position).ToList();
+            if (StartOfRound.Instance.inShipPhase)
+                return;
+
+            var enemys = Helper.GetNearbyEnemys(player.transform.position);
             if (enemys.Count > 0)
             {
                 bool enemyFound = false;
                 foreach (var enemy in enemys)
                 {
                     ShadyMod.Logger.LogDebug($"#### Killing nearby enemy {enemy.name} ...");
+                    player.movementAudio.PlayOneShot(enemy.dieSFX);
                     enemy.KillEnemy();
                     enemyFound = true;
                 }
