@@ -64,8 +64,14 @@
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "bad-donut",
+                Rarity = 69,
+            },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "weight",
-                Rarity = 68
+                Rarity = 70
             }
         ];
 

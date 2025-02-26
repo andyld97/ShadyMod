@@ -2,8 +2,6 @@ using BepInEx;
 using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
-using LethalLib.Modules;
-using Newtonsoft.Json;
 using ShadyMod.Model;
 using ShadyMod.Network;
 using ShadyMod.Perks;
@@ -13,7 +11,6 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using Unity.Netcode;
-using Unity.Profiling;
 using UnityEngine;
 
 namespace ShadyMod;
@@ -22,6 +19,7 @@ namespace ShadyMod;
 [BepInDependency(LethalLib.Plugin.ModGUID)]
 public class ShadyMod : BaseUnityPlugin
 {
+    #region Static Memeber
     public static ShadyMod Instance { get; private set; } = null!;
 
     internal new static ManualLogSource Logger { get; private set; } = null!;
@@ -29,8 +27,9 @@ public class ShadyMod : BaseUnityPlugin
     internal static Harmony? Harmony { get; set; }
 
     public static AssetBundle? assets = null;
-   
-    #region Private Memebers
+    #endregion
+
+    #region Private Memeber
 
     private bool isInitalized = false;
     private float defaultPlayerMovementSpeed = 0f;
@@ -98,6 +97,13 @@ public class ShadyMod : BaseUnityPlugin
                 {
                     asset.rotationOffset = new Vector3(180, 0, 270);
                     asset.positionOffset = new Vector3(0f, 0.322f, -0.2f);
+                }
+                else
+                {
+                    if (assetMeta.Name.Contains("donut", StringComparison.OrdinalIgnoreCase))
+                    {
+                        asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
+                    }
                 }
 
                 LethalLib.Modules.NetworkPrefabs.RegisterNetworkPrefab(asset.spawnPrefab);
@@ -226,17 +232,19 @@ public class ShadyMod : BaseUnityPlugin
                 if (StartOfRound.Instance.inShipPhase)
                     return;
 
-                Logger.LogDebug("#### Player executing donut action!");
+                // Restore health
+                if (itemSearchName.Contains("bad"))
+                    self.DamagePlayer(50);
+                else
+                {
+                    self.health = 100;
+                    self.healthRegenerateTimer = 0f;
+                    self.HealServerRpc();
+                }
 
-                AudioClip customClip = StartOfRound.Instance.playerJumpSFX;
-                if (customClip != null && self.movementAudio != null)
-                    self.movementAudio.PlayOneShot(customClip);
-
-                HUDManager.Instance.ShakeCamera(ScreenShakeType.Big);
-                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(self.transform.position.x, self.transform.position.y + UnityEngine.Random.Range(10, 20), self.transform.position.z));
                 DisablePerks(self);
 
-                lastPlayerActionPerformed = true;
+                lastPlayerActionPerformed = false;
                 self.DestroyItemInSlotAndSync(self.currentItemSlot);
                 return;
             }
