@@ -38,8 +38,12 @@ namespace ShadyMod.Perks
                     return;
             }
 
-            player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
-            player.gameplayCamera.transform.localPosition = new Vector3(0, playerScale, 0);
+            float scale = playerScale;
+            if (ShouldIncreasePerk(player))
+                scale = 0.4f;
+
+            player.transform.localScale = new Vector3(scale, scale, scale);
+            player.gameplayCamera.transform.localPosition = new Vector3(0, scale, 0);
             player.jumpForce = playerJumpForce;
 
             if (!force)

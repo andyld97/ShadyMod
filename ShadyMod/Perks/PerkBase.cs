@@ -28,5 +28,10 @@ namespace ShadyMod.Perks
         {
             return item.name.Contains(TriggerItemName); 
         }
+
+        public virtual bool ShouldIncreasePerk(PlayerControllerB player)
+        {
+            return player.name.Contains(TriggerItemName, System.StringComparison.OrdinalIgnoreCase);
+        }
     }
 }

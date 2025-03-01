@@ -5,9 +5,9 @@ namespace ShadyMod.Perks
 {
     public class EnemySmallPerk : PerkBase
     {
-        public override string Name => "kp";
+        public override string Name => "Enemy Small Perk";
 
-        public override string Description => "kp";
+        public override string Description => "Scales all nearby enemies small";
 
         public override string TriggerItemName => "patrick";
 
@@ -28,7 +28,7 @@ namespace ShadyMod.Perks
 
                     float scaleFactor = .5f;
                     if (enemy.name.Contains("ForestGiant", StringComparison.OrdinalIgnoreCase))
-                        scaleFactor = .1f;
+                        scaleFactor = .15f;
 
                     enemy.transform.localScale = new UnityEngine.Vector3(scaleFactor, scaleFactor, scaleFactor);                    
                 }

@@ -31,7 +31,7 @@ namespace ShadyMod.Perks
 
             player.movementSpeed = playerMovementSpeedPerk;
 
-            if (player.name.Contains(TriggerItemName))
+            if (ShouldIncreasePerk(player)) 
                 player.movementSpeed += movementIncrease;
 
             if (!force)

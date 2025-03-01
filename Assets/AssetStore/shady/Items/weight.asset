@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: Heavy Weight
   spawnPositionTypes: []
   twoHanded: 1
-  twoHandedAnimation: 0
+  twoHandedAnimation: 1
   disableHandsOnWall: 0
   canBeGrabbedBeforeGameStart: 1
   weight: 2
@@ -52,7 +52,7 @@ MonoBehaviour:
   isDefensiveWeapon: 0
   toolTips:
   - 
-  verticalOffset: 0.5
+  verticalOffset: 0.25
   floorYOffset: 0
   allowDroppingAheadOfPlayer: 1
   restingRotation: {x: 90, y: 0, z: 0}

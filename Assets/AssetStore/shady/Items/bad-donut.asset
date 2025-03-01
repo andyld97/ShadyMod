@@ -15,7 +15,7 @@ MonoBehaviour:
   itemId: 0
   itemName: bad-donut
   spawnPositionTypes:
-  - {fileID: 11400000, guid: 70bd1e9225a14194fad4db37c50120e4, type: 2}
+  - {fileID: 11400000, guid: 6631d266aff1bd044b30cea88b5ae38f, type: 2}
   twoHanded: 0
   twoHandedAnimation: 0
   disableHandsOnWall: 0

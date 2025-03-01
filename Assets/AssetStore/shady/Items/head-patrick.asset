@@ -52,7 +52,7 @@ MonoBehaviour:
   isDefensiveWeapon: 0
   toolTips:
   - 'Teleport: [LMB]'
-  verticalOffset: 0.5
+  verticalOffset: 0.2
   floorYOffset: 0
   allowDroppingAheadOfPlayer: 1
   restingRotation: {x: 0, y: 0, z: 0}
