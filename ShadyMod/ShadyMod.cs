@@ -121,8 +121,19 @@ public class ShadyMod : BaseUnityPlugin
         On.GameNetcodeStuff.PlayerControllerB.SwitchToItemSlot += PlayerControllerB_SwitchToItemSlot;
         On.GameNetcodeStuff.PlayerControllerB.ActivateItem_performed += PlayerControllerB_ActivateItem_performed;
         On.GameNetcodeStuff.PlayerControllerB.DiscardHeldObject += PlayerControllerB_DiscardHeldObject;
+        On.GameNetcodeStuff.PlayerControllerB.DropAllHeldItems += PlayerControllerB_DropAllHeldItems;
 
         Logger.LogInfo($"#### {MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
+        
+        // TODO: Bei bestimmten Events: DisablePerks() aufrufen:
+        // -> Player stirbt
+        // -> Player wird gefeuert
+    }
+
+    private void PlayerControllerB_DropAllHeldItems(On.GameNetcodeStuff.PlayerControllerB.orig_DropAllHeldItems orig, PlayerControllerB self, bool itemsFall, bool disconnecting)
+    {
+        orig(self, itemsFall, disconnecting);
+        DisablePerks(self);
     }
 
     #endregion
@@ -177,7 +188,8 @@ public class ShadyMod : BaseUnityPlugin
                 new ScaleSmallPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
                 new ScaleBigPerk(defaultPlayerScale, defaultJumpForce, defaultCameraPos),
                 new EnemyKillPerk(),
-                new EnemyStunnPerk()
+                new EnemyStunnPerk(),
+                new EnemySmallPerk()
             ];
 
             isInitalized = true;
@@ -234,18 +246,22 @@ public class ShadyMod : BaseUnityPlugin
 
                 // Restore health
                 if (itemSearchName.Contains("bad"))
-                    self.DamagePlayer(50);
+                {
+                    self.DamagePlayerServerRpc(50, self.health - 50);
+                    self.MakeCriticallyInjuredServerRpc();
+                }
                 else
                 {
                     self.health = 100;
                     self.healthRegenerateTimer = 0f;
+                    self.criticallyInjured = false;
+                    self.hasBeenCriticallyInjured = false;
                     self.HealServerRpc();
                 }
 
-                DisablePerks(self);
-
-                lastPlayerActionPerformed = false;
+                DisablePerks(self);                
                 self.DestroyItemInSlotAndSync(self.currentItemSlot);
+                lastPlayerActionPerformed = false;
                 return;
             }
 

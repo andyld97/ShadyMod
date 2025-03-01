@@ -96,7 +96,7 @@ namespace ShadyMod.Perks
     public class ScaleBigPerk : PerkBase
     {
         private const float playerJumpForce = 20f;
-        private const float playerScale = 1.125f;
+        private const float playerScale = 1.25f;
 
         private readonly Vector3 defaultPlayerScale = Vector3.zero;
         private readonly float defaultPlayerJumpForce = 0f;
