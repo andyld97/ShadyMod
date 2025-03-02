@@ -10,6 +10,8 @@ namespace ShadyMod.Perks
 
         public override string TriggerItemName => "jedon";
 
+        public override bool CanPerkBeIncreased => true;
+
         public override void OnUpdate(PlayerControllerB player)
         {
             base.OnUpdate(player);
@@ -38,7 +40,10 @@ namespace ShadyMod.Perks
                 }
 
                 if (found)
+                {
+                    Helper.DisplayTooltip("You scared the enemys, time to leave (be fast)!");
                     player.DestroyItemInSlotAndSync(player.currentItemSlot);
+                }
             }
         }
     }

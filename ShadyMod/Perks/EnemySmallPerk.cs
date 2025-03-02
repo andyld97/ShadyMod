@@ -11,6 +11,8 @@ namespace ShadyMod.Perks
 
         public override string TriggerItemName => "patrick";
 
+        public override bool CanPerkBeIncreased => false;
+
         public override void OnUpdate(PlayerControllerB player)
         {
             base.OnUpdate(player);

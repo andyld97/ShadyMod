@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -41,6 +42,30 @@ namespace ShadyMod
             }
 
             return enemies;
+        }
+
+        public static void SendChatMessage(string chatMessage)
+        {
+            try
+            {
+                string item = $"<color=#FF00FF>Shady</color>: <color=#FFFF00>{chatMessage}</color>";
+                HUDManager.Instance.ChatMessageHistory.Add(item);
+                UpdateChatText();
+            }
+            catch (Exception ex)
+            {
+                ShadyMod.Logger.LogError($"#### Failed to send chat message: {ex.Message}");
+            }
+        }
+
+        public static void DisplayTooltip(string message)
+        {
+            HUDManager.Instance.DisplayTip("ShadyMod", message, false, false, "LC_Tip1");
+        }
+
+        private static void UpdateChatText()
+        {
+            ((TMP_Text)HUDManager.Instance.chatText).text = string.Join("\n", HUDManager.Instance.ChatMessageHistory);
         }
     }
 }

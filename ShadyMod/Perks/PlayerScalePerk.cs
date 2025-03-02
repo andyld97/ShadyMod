@@ -28,6 +28,8 @@ namespace ShadyMod.Perks
 
         public override string TriggerItemName => "paul";
 
+        public override bool CanPerkBeIncreased => true;
+
         public override void Apply(PlayerControllerB player, bool force = false)
         {
             base.Apply(player);
@@ -39,12 +41,19 @@ namespace ShadyMod.Perks
             }
 
             float scale = playerScale;
+            float jumpForce = playerJumpForce;
             if (ShouldIncreasePerk(player))
+            {
                 scale = 0.4f;
+                jumpForce -= 1f;
+            }
+
+            if (!force)
+                Helper.SendChatMessage($"{player.playerUsername} einfach kleinste Spieler!");
 
             player.transform.localScale = new Vector3(scale, scale, scale);
             player.gameplayCamera.transform.localPosition = new Vector3(0, scale, 0);
-            player.jumpForce = playerJumpForce;
+            player.jumpForce = jumpForce;
 
             if (!force)
             {
@@ -119,6 +128,8 @@ namespace ShadyMod.Perks
 
         public override string TriggerItemName => "aveloth";
 
+        public override bool CanPerkBeIncreased => true;
+
         public override void Apply(PlayerControllerB player, bool force = false)
         {
             if (!force)
@@ -129,9 +140,17 @@ namespace ShadyMod.Perks
 
             base.Apply(player);
 
-            player.transform.localScale = new Vector3(playerScale, playerScale, playerScale);
-            player.gameplayCamera.transform.localPosition = new Vector3(0, playerScale, 0);
-            player.jumpForce = playerJumpForce;
+            float scaleFactor = playerScale;
+            float jumpForce = playerJumpForce;
+            if (ShouldIncreasePerk(player))
+            {
+                scaleFactor += .5f;
+                jumpForce += 2f;
+            }
+
+            player.transform.localScale = new Vector3(scaleFactor, scaleFactor, scaleFactor);
+            player.gameplayCamera.transform.localPosition = new Vector3(0, scaleFactor, 0);
+            player.jumpForce = jumpForce;
 
             if (!force)
             {

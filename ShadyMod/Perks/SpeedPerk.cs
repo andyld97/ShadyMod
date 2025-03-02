@@ -19,6 +19,8 @@ namespace ShadyMod.Perks
 
         public override string TriggerItemName => "belebt";
 
+        public override bool CanPerkBeIncreased => true;
+
         public override void Apply(PlayerControllerB player, bool force = false)
         {
             if (!force)
@@ -33,6 +35,14 @@ namespace ShadyMod.Perks
 
             if (ShouldIncreasePerk(player)) 
                 player.movementSpeed += movementIncrease;
+
+            if (!force)
+            {
+                if (player.playerUsername.Contains("belebt", System.StringComparison.OrdinalIgnoreCase))
+                    Helper.SendChatMessage($"belebt einfach schneller als Elytra, Wahnsinn (◡‿◡)");
+                else
+                    Helper.SendChatMessage($"{player.playerUsername} einfach schnellste(r)");
+            }
 
             if (!force)
                 isApplied = true;

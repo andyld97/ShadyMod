@@ -12,9 +12,12 @@ namespace ShadyMod.Perks
 
         public abstract string TriggerItemName { get; }
 
-        public virtual void Apply(PlayerControllerB player, bool force = false)
-        { 
+        public abstract bool CanPerkBeIncreased { get; }
 
+        public virtual void Apply(PlayerControllerB player, bool force = false)
+        {
+            if (CanPerkBeIncreased && ShouldIncreasePerk(player))
+                Helper.DisplayTooltip("Your own head? Great! Your perk will be increased!");
         }
 
         public virtual void Reset(PlayerControllerB player, bool force = false)

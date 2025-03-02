@@ -247,6 +247,7 @@ public class ShadyMod : BaseUnityPlugin
                 // Restore health
                 if (itemSearchName.Contains("bad"))
                 {
+                    Helper.DisplayTooltip("That was a bad idea ...");
                     self.DamagePlayerServerRpc(50, self.health - 50);
                     self.MakeCriticallyInjuredServerRpc();
                 }
@@ -298,6 +299,7 @@ public class ShadyMod : BaseUnityPlugin
                                 self.KillPlayer(Vector3.zero, false, CauseOfDeath.Fan);
                             else
                             {
+                                Helper.DisplayTooltip("Lucky you! Maybe you can bring back the dead body!");
                                 HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
                                 PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.deadBody.spawnPosition.x + teleportOffset, player.deadBody.spawnPosition.y, player.deadBody.spawnPosition.z + teleportOffset));
                                 DisablePerks(self);
@@ -323,6 +325,8 @@ public class ShadyMod : BaseUnityPlugin
                 if (!found)
                 {
                     Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
+                    Helper.DisplayTooltip($"Bischt deppert? Target Player \"{targetPlayerName}\" not found to teleport to!");
+                    Helper.SendChatMessage($"{self.playerUsername} ist deppert :(");
                     DisablePerks(self);
                     self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     lastPlayerActionPerformed = false;
