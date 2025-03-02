@@ -223,7 +223,6 @@ public class ShadyMod : BaseUnityPlugin
             if (currentItem == null)
             {
                 // Unabhängig von lastPlayerActionPerformed ausführen, um sicherzustellen, dass lastPlayerActionPerformed nur auf true gesetzt wird, wenn der richtige Zeitpunkt ist und ich an das Item vom Spieler rankomme!
-                Logger.LogDebug("#### No item found to activate!");
                 return;
             }
 

@@ -72,6 +72,18 @@
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "weight",
                 Rarity = 70
+            },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "shadydoc1",
+                Rarity = 30,
+            },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "shadydoc2",
+                Rarity = 30,
             }
         ];
 

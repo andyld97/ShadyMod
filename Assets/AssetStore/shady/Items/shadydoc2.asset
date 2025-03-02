@@ -10,39 +10,38 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c30496d6ae6d6f907456e10a94e01ec6, type: 3}
-  m_Name: bad-donut
+  m_Name: shadydoc2
   m_EditorClassIdentifier: 
   itemId: 0
-  itemName: bad-donut
-  spawnPositionTypes:
-  - {fileID: 11400000, guid: 6631d266aff1bd044b30cea88b5ae38f, type: 2}
+  itemName: Shady Document 2
+  spawnPositionTypes: []
   twoHanded: 0
   twoHandedAnimation: 0
   disableHandsOnWall: 0
   canBeGrabbedBeforeGameStart: 1
   weight: 1
   itemIsTrigger: 0
-  holdButtonUse: 1
-  itemSpawnsOnGround: 0
+  holdButtonUse: 0
+  itemSpawnsOnGround: 1
   isConductiveMetal: 0
   isScrap: 1
-  creditsWorth: 5
+  creditsWorth: 30
   lockedInDemo: 0
   highestSalePercentage: 80
-  maxValue: 10
-  minValue: 1
-  spawnPrefab: {fileID: 6308064564911952512, guid: dac77e8b6bccde14bbbb05b549f84666, type: 3}
+  maxValue: 200
+  minValue: 130
+  spawnPrefab: {fileID: 6836830067004166139, guid: f381678b42b632f40a5b4f7a480d5871, type: 3}
   requiresBattery: 0
   batteryUsage: 0
   automaticallySetUsingPower: 0
-  itemIcon: {fileID: 21300000, guid: 3ee5a29e1ced6dc47b573ddeccd4161a, type: 3}
+  itemIcon: {fileID: 21300000, guid: 11f74bc794d739649a6cd4fe66fa4168, type: 2}
   grabAnim: 
   useAnim: 
   pocketAnim: 
   throwAnim: 
   grabAnimationTime: 0
-  grabSFX: {fileID: 0}
-  dropSFX: {fileID: 0}
+  grabSFX: {fileID: 8300000, guid: 34a2eee99d3c4ca44a5456eba5c83727, type: 3}
+  dropSFX: {fileID: 8300000, guid: 34a2eee99d3c4ca44a5456eba5c83727, type: 3}
   pocketSFX: {fileID: 0}
   throwSFX: {fileID: 0}
   syncGrabFunction: 1
@@ -52,13 +51,13 @@ MonoBehaviour:
   saveItemVariable: 0
   isDefensiveWeapon: 0
   toolTips:
-  - 'Eat Donut: [LMB]'
-  verticalOffset: 0.06
+  - 
+  verticalOffset: 0.25
   floorYOffset: 0
   allowDroppingAheadOfPlayer: 1
-  restingRotation: {x: 0, y: 270, z: 0}
-  rotationOffset: {x: 0, y: 270, z: 0}
-  positionOffset: {x: -0.06, y: 0.64, z: 0}
+  restingRotation: {x: 180, y: 0, z: 180}
+  rotationOffset: {x: 180, y: 0, z: 0}
+  positionOffset: {x: 0, y: 0.32, z: 0}
   meshOffset: 1
   meshVariants: []
   materialVariants: []

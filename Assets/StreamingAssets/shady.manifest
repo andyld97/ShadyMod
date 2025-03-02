@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1834554658
+CRC: 1412407732
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: b6b9eb9edeb89d533f64bed69494ca81
+    Hash: b73ed317acefb681273bdfcfb2c48a24
   TypeTreeHash:
     serializedVersion: 2
     Hash: e77c27623a00abe6403e053d4b2ea6f0
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: b6b9eb9edeb89d533f64bed69494ca81
+    Hash: b73ed317acefb681273bdfcfb2c48a24
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -61,10 +61,12 @@ SerializeReferenceClassIdentifiers:
   ClassName: Battery
 Assets:
 - Assets/AssetStore/shady/Items/head-jedon.asset
+- Assets/AssetStore/shady/Items/shadydoc2.asset
 - Assets/AssetStore/shady/Items/head-belebt.asset
 - Assets/AssetStore/shady/Items/head-andy.asset
 - Assets/AssetStore/shady/Items/head-aveloth.asset
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
+- Assets/AssetStore/shady/Items/shadydoc1.asset
 - Assets/AssetStore/shady/Items/head-lasse.asset
 - Assets/AssetStore/shady/Items/head-patrick.asset
 - Assets/AssetStore/shady/Items/weight.asset
