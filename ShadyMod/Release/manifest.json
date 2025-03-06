@@ -1,0 +1,10 @@
+{
+    "name": "ShadyMod",
+    "version_number": "1.0.1",
+    "website_url": "https://github.com/andyld97/ShadyMod",
+    "description": "A mod for our [shady]-Clan. Currently scrab only!",
+    "dependencies": [
+        "Evaisa-LethalLib-0.16.2",
+        "BepInEx-BepInExPack-5.4.2100"
+    ]
+}
