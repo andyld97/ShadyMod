@@ -283,7 +283,11 @@ public class ShadyMod : BaseUnityPlugin
                     if (player.playerUsername.Contains(targetPlayerName, StringComparison.OrdinalIgnoreCase))
                     {
                         if (player.playerUsername == GameNetworkManager.Instance.localPlayerController.playerUsername)
-                            continue;
+                        {
+                            Helper.DisplayTooltip("Inception occured, self teleport canceled!");
+                            lastPlayerActionPerformed = false;
+                            return;
+                        }
 
                         Logger.LogDebug($"#### Player found: {player.playerUsername} ...");
 
@@ -325,7 +329,7 @@ public class ShadyMod : BaseUnityPlugin
                 {
                     Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
                     Helper.DisplayTooltip($"Bischt deppert? Target Player \"{targetPlayerName}\" not found to teleport to!");
-                    Helper.SendChatMessage($"{self.playerUsername} ist deppert :(");
+                    Helper.SendChatMessage($"{self.playerUsername} isch deppert :(");
                     DisablePerks(self);
                     self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     lastPlayerActionPerformed = false;
