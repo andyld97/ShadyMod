@@ -329,7 +329,7 @@ public class ShadyMod : BaseUnityPlugin
                 {
                     Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
                     Helper.DisplayTooltip($"Bischt deppert? Target Player \"{targetPlayerName}\" not found to teleport to!");
-                    Helper.SendChatMessage($"{self.playerUsername} isch deppert :(");
+                    Helper.SendChatMessage($"{self.playerUsername} isch deppert (???)");
                     DisablePerks(self);
                     self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     lastPlayerActionPerformed = false;

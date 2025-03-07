@@ -1,6 +1,6 @@
 {
     "name": "ShadyMod",
-    "version_number": "1.0.2",
+    "version_number": "1.0.3",
     "website_url": "https://github.com/andyld97/ShadyMod",
     "description": "A mod for our [shady]-Clan. Currently scrab only!",
     "dependencies": [

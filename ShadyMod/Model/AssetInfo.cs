@@ -2,8 +2,6 @@
 {
     public class AssetInfo
     {
-        // TODO: Rarity Balancing anpassen!
-
         public static readonly AssetInfo[] INSTANCE =
         [
             new AssetInfo()
@@ -59,13 +57,13 @@
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "donut",
-                Rarity = 69,
+                Rarity = 55,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "bad-donut",
-                Rarity = 69,
+                Rarity = 55,
             },
             new AssetInfo()
             {
@@ -77,13 +75,13 @@
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "shadydoc1",
-                Rarity = 30,
+                Rarity = 25,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "shadydoc2",
-                Rarity = 30,
+                Rarity = 25,
             }
         ];
 

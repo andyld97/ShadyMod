@@ -38,9 +38,9 @@ namespace ShadyMod.Perks
 
             if (!force)
             {
-                if (player.playerUsername.Contains("belebt", System.StringComparison.OrdinalIgnoreCase))
+                /*if (player.playerUsername.Contains("belebt", System.StringComparison.OrdinalIgnoreCase))
                     Helper.SendChatMessage($"belebt einfach schneller als Elytra, Wahnsinn (◡‿◡)");
-                /*else
+                else
                     Helper.SendChatMessage($"{player.playerUsername} einfach schnellste(r)");*/
             }
 

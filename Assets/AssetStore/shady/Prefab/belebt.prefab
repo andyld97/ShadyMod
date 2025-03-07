@@ -402,7 +402,7 @@ MonoBehaviour:
   minRange: 1
   requiresLineOfSight: 1
   headerText: belebt
-  subText: "Nachteule & \xD6sterreich (100 Credits)"
+  subText: Nachteule  (100 Credits)
   scrapValue: 100
   creatureScanID: -1
   nodeType: 2
