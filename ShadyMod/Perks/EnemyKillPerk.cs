@@ -28,7 +28,9 @@ namespace ShadyMod.Perks
                 foreach (var enemy in enemys)
                 {
                     ShadyMod.Logger.LogDebug($"#### Killing nearby enemy {enemy.name} ...");
-                    player.movementAudio.PlayOneShot(enemy.dieSFX);
+
+                    if (enemy.dieSFX != null)
+                        player.movementAudio.PlayOneShot(enemy.dieSFX);
                     enemy.KillEnemy();
                     names.Add(enemy.name.Replace("(Clone)", string.Empty).Replace("(clone)", string.Empty).Replace("Enemy", string.Empty));
                     

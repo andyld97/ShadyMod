@@ -29,7 +29,8 @@ namespace ShadyMod.Perks
                         continue;
 
                     ShadyMod.Logger.LogDebug($"#### Stunning nearby enemy {enemy.name} ...");
-                    player.movementAudio.PlayOneShot(enemy.dieSFX);
+                    if (enemy.dieSFX != null)
+                        player.movementAudio.PlayOneShot(enemy.dieSFX);
 
                     int seconds = 10;
                     if (ShouldIncreasePerk(player))

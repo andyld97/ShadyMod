@@ -399,6 +399,6 @@ MonoBehaviour:
   requiresLineOfSight: 1
   headerText: Shady Document 1
   subText: 
-  scrapValue: 0
+  scrapValue: 30
   creatureScanID: -1
   nodeType: 2

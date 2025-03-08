@@ -1,4 +1,6 @@
-﻿namespace ShadyMod.Model
+﻿using System.Linq;
+
+namespace ShadyMod.Model
 {
     public class AssetInfo
     {
@@ -8,89 +10,128 @@
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-belebt",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "belebt",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-paul",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "paul",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-lasse",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "lasse",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-aveloth",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "aveloth",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-andy",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "andy",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-jedon",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "jedon",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "head-patrick",
-                IsHead = true,
-                Rarity = 40,
+                PrefabName = "patrick",
+                ItemType = ItemType.McHead,
+                Rarity = 35,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "donut",
+                PrefabName = "donut",
+                ItemType = ItemType.Donut,
                 Rarity = 55,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "bad-donut",
+                PrefabName = "donut-bad",
+                ItemType = ItemType.BadDonut,
                 Rarity = 55,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "weight",
-                Rarity = 70
+                PrefabName = "weight",
+                ItemType = ItemType.Weight,
+                Rarity = 65
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "shadydoc1",
+                PrefabName = "ShadyDocument1",
+                ItemType = ItemType.ShadyDocument,
                 Rarity = 25,
             },
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "shadydoc2",
+                PrefabName = "ShadyDocument2",
+                ItemType = ItemType.ShadyDocument,
                 Rarity = 25,
             }
         ];
 
         public string Name { get; set; } = string.Empty!;
 
+        public string PrefabName { get; set; } = string.Empty!;
+
         public int Rarity { get; set; } = 0;
 
-        public bool IsHead { get; set; }
+        public ItemType ItemType { get; set; }
 
         public LethalLib.Modules.Levels.LevelTypes Moons { get; set; } = LethalLib.Modules.Levels.LevelTypes.All;
+
+        public static bool IsShadyItem(string name)
+        {
+            return GetShadyNameByName(name) != null;
+        }
+
+        public static AssetInfo GetShadyNameByName(string name)
+        {
+            string searchName = name.ToLower().Replace("(clone)", string.Empty);
+            return AssetInfo.INSTANCE.FirstOrDefault(p => p.PrefabName.ToLower() == searchName);
+        }
+    }
+
+    public enum ItemType
+    {
+        McHead,
+        Donut,
+        BadDonut,
+        Weight,
+        ShadyDocument
     }
 }

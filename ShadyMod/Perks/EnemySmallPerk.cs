@@ -32,7 +32,7 @@ namespace ShadyMod.Perks
                     if (enemy.name.Contains("ForestGiant", StringComparison.OrdinalIgnoreCase))
                         scaleFactor = .15f;
 
-                    enemy.transform.localScale = new UnityEngine.Vector3(scaleFactor, scaleFactor, scaleFactor);                    
+                    enemy.transform.localScale = new UnityEngine.Vector3(scaleFactor, scaleFactor, scaleFactor);           
                 }
 
                 if (found)

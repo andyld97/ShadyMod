@@ -3,15 +3,13 @@ using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
 using ShadyMod.Model;
-using ShadyMod.Network;
 using ShadyMod.Perks;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
 using Unity.Netcode;
 using UnityEngine;
+using UnityEngine.ProBuilder.MeshOperations;
 
 namespace ShadyMod;
 
@@ -37,31 +35,6 @@ public class ShadyMod : BaseUnityPlugin
     private Vector3 defaultCameraPos = Vector3.zero;
 
     private float defaultJumpForce = 0f;
-    private bool lastPlayerActionPerformed = false;
-
-    private const float teleportOffset = .5f;
-
-    private readonly static Dictionary<string, string> SteamNameMapping = new Dictionary<string, string>()
-    {
-        { "belebt", "belebt" },
-        { "paul", "vette" },
-        { "lasse", "Lasse" },
-        { "aveloth", "aveloth" },
-        { "andy", "Andy" },
-        { "jedon", "JedonFT" },
-        { "patrick", "kxmischFxC" }
-    };
-
-    //private readonly static Dictionary<string, string> SteamNameMapping = new Dictionary<string, string>()
-    //{
-    //    { "belebt", "Player #0" },
-    //    { "paul", "vette" },
-    //    { "lasse", "Lasse" },
-    //    { "aveloth", "aveloth" },
-    //    { "andy", "Player #1" },
-    //    { "jedon", "JedonFT" },
-    //    { "patrick", "kxmischFxC" }
-    //};
 
     #endregion
 
@@ -80,7 +53,7 @@ public class ShadyMod : BaseUnityPlugin
         assets = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "shady"));
         if (assets == null)
         {
-            Logger.LogError("Failed to load custom assets."); 
+            Logger.LogError("#### Failed to load custom assets."); 
             return;
         }
 
@@ -93,21 +66,18 @@ public class ShadyMod : BaseUnityPlugin
                 Logger.LogDebug($"#### Loading asset: {assetMeta.Name} with Rarity: {assetMeta.Rarity} ...");
                 asset.canBeGrabbedBeforeGameStart = true;
 
-                if (assetMeta.IsHead)
+                if (assetMeta.ItemType == ItemType.McHead)
                 {
                     asset.rotationOffset = new Vector3(180, 0, 270);
                     asset.positionOffset = new Vector3(0f, 0.322f, -0.2f);
                 }
-                else
-                {
-                    if (assetMeta.Name.Contains("donut", StringComparison.OrdinalIgnoreCase))
-                    {
-                        asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
-                    }
-                }
+                else if (assetMeta.ItemType == ItemType.Donut || assetMeta.ItemType == ItemType.BadDonut)
+                    asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
+                else if (assetMeta.ItemType == ItemType.Weight)
+                    asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
 
                 LethalLib.Modules.NetworkPrefabs.RegisterNetworkPrefab(asset.spawnPrefab);
-                LethalLib.Modules.Items.RegisterScrap(asset, assetMeta.Rarity, assetMeta.Moons);
+                LethalLib.Modules.Items.RegisterScrap(asset, assetMeta.Rarity, assetMeta.Moons);     
 
                 Logger.LogInfo($"#### Asset {assetMeta.Name} successfully registered!");
             }
@@ -117,34 +87,22 @@ public class ShadyMod : BaseUnityPlugin
 
         // Assign Events
         On.GameNetcodeStuff.PlayerControllerB.Update += PlayerControllerB_Update;
-        On.GameNetcodeStuff.PlayerControllerB.BeginGrabObject += PlayerControllerB_BeginGrabObject;
         On.GameNetcodeStuff.PlayerControllerB.SwitchToItemSlot += PlayerControllerB_SwitchToItemSlot;
-        On.GameNetcodeStuff.PlayerControllerB.ActivateItem_performed += PlayerControllerB_ActivateItem_performed;
-        On.GameNetcodeStuff.PlayerControllerB.DiscardHeldObject += PlayerControllerB_DiscardHeldObject;
         On.GameNetcodeStuff.PlayerControllerB.DropAllHeldItems += PlayerControllerB_DropAllHeldItems;
 
         Logger.LogInfo($"#### {MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
         
         // TODO: Bei bestimmten Events: DisablePerks() aufrufen:
-        // -> Player stirbt
-        // -> Player wird gefeuert
+        // -> Crew wird gefeuert
     }
+    #endregion
+
+    #region Player Events
 
     private void PlayerControllerB_DropAllHeldItems(On.GameNetcodeStuff.PlayerControllerB.orig_DropAllHeldItems orig, PlayerControllerB self, bool itemsFall, bool disconnecting)
     {
         orig(self, itemsFall, disconnecting);
         DisablePerks(self);
-    }
-
-    #endregion
-
-    #region Player Events
-
-    private void PlayerControllerB_DiscardHeldObject(On.GameNetcodeStuff.PlayerControllerB.orig_DiscardHeldObject orig, PlayerControllerB self, bool placeObject, NetworkObject parentObjectTo, Vector3 placePosition, bool matchRotationOfParent)
-    {
-        orig(self, placeObject, parentObjectTo, placePosition, matchRotationOfParent);
-        DisablePerks(self);
-        lastPlayerActionPerformed = false;
     }
 
     private void PlayerControllerB_SwitchToItemSlot(On.GameNetcodeStuff.PlayerControllerB.orig_SwitchToItemSlot orig, GameNetcodeStuff.PlayerControllerB self, int slot, GrabbableObject fillSlotWithItem)
@@ -153,21 +111,6 @@ public class ShadyMod : BaseUnityPlugin
         DisablePerks(self);
         EnablePerk(self.ItemSlots[slot], self);
     }
-
-    private void PlayerControllerB_BeginGrabObject(On.GameNetcodeStuff.PlayerControllerB.orig_BeginGrabObject orig, GameNetcodeStuff.PlayerControllerB self)
-    {
-        orig(self);
-
-        if (!isInitalized)
-            return;
-
-        var item = self.currentlyGrabbingObject;
-        if (item != null)
-        {
-            Logger.LogDebug($"#### Player grabbing an item: {item.name}");
-            EnablePerk(self.ItemSlots[self.currentItemSlot], self);
-        }
-    }  
 
     private void PlayerControllerB_Update(On.GameNetcodeStuff.PlayerControllerB.orig_Update orig, GameNetcodeStuff.PlayerControllerB self)
     {
@@ -209,149 +152,13 @@ public class ShadyMod : BaseUnityPlugin
             }
         }
     }
-
-    private void PlayerControllerB_ActivateItem_performed(On.GameNetcodeStuff.PlayerControllerB.orig_ActivateItem_performed orig, PlayerControllerB self, UnityEngine.InputSystem.InputAction.CallbackContext context)
-    {
-        orig(self, context);
-
-        if (!isInitalized)
-            return;
-
-        if (context.action.name == "ActivateItem")
-        {
-            var currentItem = self.ItemSlots[self.currentItemSlot];
-            if (currentItem == null)
-            {
-                // Unabhängig von lastPlayerActionPerformed ausführen, um sicherzustellen, dass lastPlayerActionPerformed nur auf true gesetzt wird, wenn der richtige Zeitpunkt ist und ich an das Item vom Spieler rankomme!
-                return;
-            }
-
-            if (lastPlayerActionPerformed)
-            {
-                Logger.LogDebug("#### Player action is too fast! Ignoring ...");
-                return;
-            }
-
-            lastPlayerActionPerformed = true;
-            Logger.LogDebug("#### Player action is valid! Processing ...");
-
-            string itemSearchName = currentItem.name.ToLower().Replace("(clone)", string.Empty);
-            Logger.LogDebug($"#### Item Search Name: {itemSearchName}");
-
-            if (itemSearchName.Contains("donut"))
-            {
-                if (StartOfRound.Instance.inShipPhase)
-                    return;
-
-                // Restore health
-                if (itemSearchName.Contains("bad"))
-                {
-                    Helper.DisplayTooltip("That was a bad idea ...");
-                    self.DamagePlayerServerRpc(50, self.health - 50);
-                    self.MakeCriticallyInjuredServerRpc();
-                }
-                else
-                {
-                    self.health = 100;
-                    self.healthRegenerateTimer = 0f;
-                    self.criticallyInjured = false;
-                    self.hasBeenCriticallyInjured = false;
-                    self.HealServerRpc();
-                }
-
-                DisablePerks(self);                
-                self.DestroyItemInSlotAndSync(self.currentItemSlot);
-                lastPlayerActionPerformed = false;
-                return;
-            }
-
-            // Check if this item is a player head
-            if (StartOfRound.Instance.inShipPhase || !AssetInfo.INSTANCE.Any(p => p.Name.ToLower().Contains(itemSearchName) && p.IsHead))
-                return;
-
-            if (SteamNameMapping.ContainsKey(itemSearchName))
-            {
-                string targetPlayerName = SteamNameMapping[itemSearchName];
-
-                // Search for player with the given target name
-                bool found = false;
-
-                for (int i = 0; i < StartOfRound.Instance.allPlayerObjects.Length; i++)
-                {
-                    var player = StartOfRound.Instance.allPlayerScripts[i];
-
-                    if (player.playerUsername.Contains(targetPlayerName, StringComparison.OrdinalIgnoreCase))
-                    {
-                        if (player.playerUsername == GameNetworkManager.Instance.localPlayerController.playerUsername)
-                        {
-                            Helper.DisplayTooltip("Inception occured, self teleport canceled!");
-                            lastPlayerActionPerformed = false;
-                            return;
-                        }
-
-                        Logger.LogDebug($"#### Player found: {player.playerUsername} ...");
-
-                        if (player.isPlayerDead)
-                        {
-                            bool killCurrentPlayer = true;
-
-                            if (self.deadBody != null)
-                                killCurrentPlayer = Helper.GetRandomBoolean();
-
-                            if (killCurrentPlayer)
-                                self.KillPlayer(Vector3.zero, false, CauseOfDeath.Fan);
-                            else
-                            {
-                                Helper.DisplayTooltip("Lucky you! Maybe you can bring back the dead body!");
-                                HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.deadBody.spawnPosition.x + teleportOffset, player.deadBody.spawnPosition.y, player.deadBody.spawnPosition.z + teleportOffset));
-                                DisablePerks(self);
-                                lastPlayerActionPerformed = false;
-                            }
-                        }
-                        else
-                        {
-                            // Teleport to the player
-                            Logger.LogDebug($"#### Teleporting player {player.playerUsername}");
-
-                            HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                            PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.transform.position.x + teleportOffset, player.transform.transform.position.y, player.transform.position.z + teleportOffset));
-                            DisablePerks(self);
-                            lastPlayerActionPerformed = false;
-                        }
-
-                        found = true;
-                        break;
-                    }
-                }
-
-                if (!found)
-                {
-                    Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
-                    Helper.DisplayTooltip($"Bischt deppert? Target Player \"{targetPlayerName}\" not found to teleport to!");
-                    Helper.SendChatMessage($"{self.playerUsername} isch deppert (???)");
-                    DisablePerks(self);
-                    self.DestroyItemInSlotAndSync(self.currentItemSlot);
-                    lastPlayerActionPerformed = false;
-                    return;
-                }
-            }
-            else
-                Logger.LogWarning("#### Name-Mapping not found!");
-
-            self.DestroyItemInSlotAndSync(self.currentItemSlot);
-            DisablePerks(self);
-            lastPlayerActionPerformed = false;
-        }
-    }
-
     #endregion
 
     #region Perks
 
     public static List<PerkBase> Perks = [];
 
-    private void EnablePerk(GrabbableObject item, PlayerControllerB player)
+    public static void EnablePerk(GrabbableObject item, PlayerControllerB player)
     {
         if (item == null)
             return;
@@ -366,11 +173,10 @@ public class ShadyMod : BaseUnityPlugin
         });      
     }
 
-    private void DisablePerks(PlayerControllerB player, bool force = false)
+    public static void DisablePerks(PlayerControllerB player, bool force = false)
     {
         Logger.LogDebug("[PERK]: Disabling all perks...");
         Perks.ForEach(p => p.Reset(player, force));
-        lastPlayerActionPerformed = false;
     }
 
     #endregion

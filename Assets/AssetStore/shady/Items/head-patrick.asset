@@ -28,8 +28,8 @@ MonoBehaviour:
   creditsWorth: 100
   lockedInDemo: 0
   highestSalePercentage: 80
-  maxValue: 200
-  minValue: 130
+  maxValue: 100
+  minValue: 60
   spawnPrefab: {fileID: 3603257678857858154, guid: d365cc0c383f4d148b5da4a114feea04, type: 3}
   requiresBattery: 0
   batteryUsage: 0

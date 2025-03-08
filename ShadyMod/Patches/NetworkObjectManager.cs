@@ -56,7 +56,6 @@ namespace ShadyMod.Patches
             {
                 Debug.Log($"Action to execute is: {nm.Action}");
 
-                // TODO: Hier auch mit PlayerObjects arbeiten.
                 foreach (var kvp in NetworkManager.Singleton.SpawnManager.SpawnedObjects)
                 {
                     var playerController = kvp.Value.GetComponent<PlayerControllerB>();

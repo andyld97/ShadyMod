@@ -399,10 +399,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxRange: 13
-  minRange: 0
+  minRange: 1
   requiresLineOfSight: 1
   headerText: Andy (scared)
   subText: Einmal mit Profis arbeiten (100 Credits)
-  scrapValue: 50
+  scrapValue: 100
   creatureScanID: -1
   nodeType: 2
