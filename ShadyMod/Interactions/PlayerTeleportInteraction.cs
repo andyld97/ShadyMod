@@ -92,8 +92,8 @@ namespace ShadyMod.Interactions
                 {
                     ShadyMod.Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
                     Helper.DisplayTooltip($"Target Player \"{targetPlayerName}\" not found to teleport to (@{self.playerUsername})!");
-                    ShadyMod.DisablePerks(self);
-                    self.DestroyItemInSlotAndSync(self.currentItemSlot);
+                    // ShadyMod.DisablePerks(self);
+                    // self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     return;
                 }
             }

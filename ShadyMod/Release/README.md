@@ -1,8 +1,8 @@
 ## Shady Mod
 
-This mod adds 12 Scrap-Items to the game (related to our clan):
+This mod adds 13 Scrap-Items to the game (related to our clan):
 - 7 Minecraft Heads
-- 5 other Items
+- 6 other Items
 
 With a Minecraft-Head, you can teleport yourself to the player (only works for our clan members)
 
@@ -12,11 +12,16 @@ Some perks are increased if a player holds it's own head!
 
 A big thank you to all team members, and especially to belebt, for her invaluable help with testing!
 
-Currently this mod only adds Scrap-Items, later on I plan to add enemies too (future plans)
+Currently this mod only adds Scrap-Items, later on I plan to add enemies too!
 
 Be a `great asset` and have fun!
 
 ## Changelog
+
+## v1.0.5 (09.03.2025)
+- Added new Robot-Item
+- MC Heads won't be destroyed if the target player isn't available
+- Fix Donut
 
 ### v1.0.4 (08.03.2025)
 - Fix Item Activate Handling

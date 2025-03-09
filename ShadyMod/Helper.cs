@@ -63,6 +63,9 @@ namespace ShadyMod
             HUDManager.Instance.DisplayTip("ShadyMod", message, false, false, "LC_Tip1");
         }
 
+        /// <summary>
+        /// This currently only works for displaying local chat messages!
+        /// </summary>
         private static void UpdateChatText()
         {
             ((TMP_Text)HUDManager.Instance.chatText).text = string.Join("\n", HUDManager.Instance.ChatMessageHistory);

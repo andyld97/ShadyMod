@@ -11,10 +11,12 @@ namespace ShadyMod.Interactions
             {
                 Helper.DisplayTooltip("That was a bad idea ...");
                 self.DamagePlayer(50, true, true);
-                self.MakeCriticallyInjured(true);
+                self.DropAllHeldItems(true);
             }
             else
+            {
                 self.MakeCriticallyInjured(false);
+            }
 
             ShadyMod.DisablePerks(self);
             self.DestroyItemInSlotAndSync(self.currentItemSlot);

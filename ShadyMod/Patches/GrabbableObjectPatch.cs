@@ -3,6 +3,7 @@ using HarmonyLib;
 using ShadyMod.Interactions;
 using ShadyMod.Model;
 using System.Collections.Generic;
+using UnityEngine;
 
 namespace ShadyMod.Patches
 {
@@ -29,17 +30,29 @@ namespace ShadyMod.Patches
             if (info == null)
                 return;
 
-            if (StartOfRound.Instance.inShipPhase)
-                return;
-
             switch (info.ItemType)
             {
                 case ItemType.McHead:
-                    PlayerTeleportInteraction.Execute(__instance, __instance.playerHeldBy, info);
+                    {
+                        if (StartOfRound.Instance.inShipPhase)
+                            return;
+
+                        PlayerTeleportInteraction.Execute(__instance, __instance.playerHeldBy, info);
+                    }
                     break;
                 case ItemType.Donut:
                 case ItemType.BadDonut:
-                    DonutInteraction.ExecuteDonutInteraction(__instance, __instance.playerHeldBy, info);
+                    {
+                        if (StartOfRound.Instance.inShipPhase)
+                            return;
+
+                        DonutInteraction.ExecuteDonutInteraction(__instance, __instance.playerHeldBy, info);
+                    }
+                    break;
+                case ItemType.Robot:
+                    {
+                        __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
+                    }
                     break;
             }
         }

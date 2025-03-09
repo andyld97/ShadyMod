@@ -101,6 +101,14 @@ namespace ShadyMod.Model
                 PrefabName = "ShadyDocument2",
                 ItemType = ItemType.ShadyDocument,
                 Rarity = 25,
+            },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "robot",
+                PrefabName = "robot",
+                ItemType = ItemType.Robot,
+                Rarity = 15
             }
         ];
 
@@ -132,6 +140,7 @@ namespace ShadyMod.Model
         Donut,
         BadDonut,
         Weight,
-        ShadyDocument
+        ShadyDocument,
+        Robot
     }
 }

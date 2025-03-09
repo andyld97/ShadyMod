@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1577546527
+CRC: 4093260795
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 5d659bfa9a590dd4c1eef2d87332ca7d
+    Hash: 1672285da1faa3c9cb56254d21dfe0a8
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 28725d9e4bf3063015f21c1cb7cffc6d
+    Hash: 830152ed228b4ecb4ae1da18393aab17
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 5d659bfa9a590dd4c1eef2d87332ca7d
+    Hash: 1672285da1faa3c9cb56254d21dfe0a8
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -43,7 +43,11 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 3d0cf24d2ccc3b7eab72048d0f57c437, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 1ca002da428252441b92f28d83c8a65f, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -57,17 +61,34 @@ ClassTypes:
 SerializeReferenceClassIdentifiers:
 - AssemblyName: Assembly-CSharp
   ClassName: Battery
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.AutoUnwrapSettings
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.Face
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.Shapes.Cylinder
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.Shapes.Torus
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.SharedVertex
+- AssemblyName: Unity.ProBuilder
+  ClassName: UnityEngine.ProBuilder.UnwrapParameters
 Assets:
 - Assets/AssetStore/shady/Items/head-jedon.asset
 - Assets/AssetStore/shady/Items/shadydoc2.asset
+- Assets/AssetStore/shady/Prefab/RobotArmLeft.prefab
 - Assets/AssetStore/shady/Items/head-belebt.asset
+- Assets/AssetStore/shady/Prefab/RobotArmRight.prefab
 - Assets/AssetStore/shady/Items/head-andy.asset
+- Assets/AssetStore/shady/Items/robot.asset
 - Assets/AssetStore/shady/Items/head-aveloth.asset
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
 - Assets/AssetStore/shady/Items/shadydoc1.asset
 - Assets/AssetStore/shady/Items/head-lasse.asset
+- Assets/AssetStore/shady/Prefab/RobotBody.prefab
 - Assets/AssetStore/shady/Items/head-patrick.asset
 - Assets/AssetStore/shady/Items/weight.asset
+- Assets/AssetStore/shady/Prefab/Robot.prefab
 - Assets/AssetStore/shady/Items/bad-donut.asset
 - Assets/AssetStore/shady/Items/head-paul.asset
 - Assets/AssetStore/shady/Items/donut.asset
