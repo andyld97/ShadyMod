@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 4093260795
+CRC: 4039344622
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 1672285da1faa3c9cb56254d21dfe0a8
+    Hash: c7cbb1dea7fa516d5ea099ab976c8cbb
   TypeTreeHash:
     serializedVersion: 2
     Hash: 830152ed228b4ecb4ae1da18393aab17
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 1672285da1faa3c9cb56254d21dfe0a8
+    Hash: c7cbb1dea7fa516d5ea099ab976c8cbb
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -81,9 +81,11 @@ Assets:
 - Assets/AssetStore/shady/Prefab/RobotArmRight.prefab
 - Assets/AssetStore/shady/Items/head-andy.asset
 - Assets/AssetStore/shady/Items/robot.asset
+- Assets/AssetStore/shady/Prefab/PlayerBox.prefab
 - Assets/AssetStore/shady/Items/head-aveloth.asset
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
 - Assets/AssetStore/shady/Items/shadydoc1.asset
+- Assets/AssetStore/shady/Items/playerbox.asset
 - Assets/AssetStore/shady/Items/head-lasse.asset
 - Assets/AssetStore/shady/Prefab/RobotBody.prefab
 - Assets/AssetStore/shady/Items/head-patrick.asset

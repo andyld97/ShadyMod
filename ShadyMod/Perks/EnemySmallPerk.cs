@@ -20,7 +20,7 @@ namespace ShadyMod.Perks
             if (StartOfRound.Instance.inShipPhase)
                 return;
 
-            var enemys = Helper.GetNearbyEnemys(player.transform.position);
+            var enemys = Helper.GetNearbyEnemys(player.transform.position, 5);
             if (enemys.Count > 0)
             {
                 bool found = false;

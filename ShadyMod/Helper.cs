@@ -17,6 +17,11 @@ namespace ShadyMod
             return $"{vector3.x}|{vector3.y}|{vector3.z}";
         }
 
+        public static bool IsSmall(this PlayerControllerB playerControllerB)
+        {
+            return playerControllerB.transform.localScale.x <= 0.5f;
+        }
+
         public static bool GetRandomBoolean()
         {
             return UnityEngine.Random.value > 0.5f;

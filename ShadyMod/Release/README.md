@@ -18,7 +18,12 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
-## v1.0.5 (09.03.2025)
+### v.1.0.6 (TBD)
+- Added new PlayerBox-Item (for player transport)
+- Decreased perk range for Enemy-Kill and Enemy-Small-Perk
+- Small player head will also be scaled small
+
+### v1.0.5 (09.03.2025)
 - Added new Robot-Item
 - MC Heads won't be destroyed if the target player isn't available
 - Fix Donut

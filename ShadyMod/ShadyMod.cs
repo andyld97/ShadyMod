@@ -77,8 +77,13 @@ public class ShadyMod : BaseUnityPlugin
                     asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
                 else if (assetMeta.ItemType == ItemType.Robot)
                 {
-                    asset.rotationOffset = new Vector3(0f, 180f, 90f); // 0f,0f,90f => falschherum aber besser
-                    asset.positionOffset = new Vector3(0.4f, 0.3f, -0.1f); // vorher -0.1f;
+                    asset.rotationOffset = new Vector3(0f, 180f, 90f);
+                    asset.positionOffset = new Vector3(0.4f, 0.3f, -0.1f);
+                }
+                else if (assetMeta.ItemType == ItemType.PlayerBox)
+                {
+                    asset.rotationOffset = new Vector3(180, 0, 270);
+                    asset.positionOffset = new Vector3(0f, 0.42f, -0.2f);
                 }
 
                 LethalLib.Modules.NetworkPrefabs.RegisterNetworkPrefab(asset.spawnPrefab);
