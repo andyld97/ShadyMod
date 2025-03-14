@@ -1,8 +1,8 @@
 ## Shady Mod
 
-This mod adds 13 Scrap-Items to the game (related to our clan):
+This mod adds 14 Scrap-Items to the game (related to our clan):
 - 7 Minecraft Heads
-- 6 other Items
+- 7 other Items
 
 With a Minecraft-Head, you can teleport yourself to the player (only works for our clan members)
 
@@ -18,9 +18,9 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
-### v.1.0.6 (TBD)
+### v1.0.6 (14.03.2025)
 - Added new PlayerBox-Item (for player transport)
-- Decreased perk range for Enemy-Kill and Enemy-Small-Perk
+- Decreased perk range for Enemy-Kill, Enemy-Small-Perk and Enemy-Stunn-Perk
 - Small player head will also be scaled small
 
 ### v1.0.5 (09.03.2025)

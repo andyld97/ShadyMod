@@ -20,7 +20,7 @@ namespace ShadyMod.Perks
             if (StartOfRound.Instance.inShipPhase)
                 return;
 
-            var enemys = Helper.GetNearbyEnemys(player.transform.position);
+            var enemys = Helper.GetNearbyEnemys(player.transform.position, 5);
             if (enemys.Count > 0)
             {
                 bool enemyFound = false;
@@ -31,6 +31,7 @@ namespace ShadyMod.Perks
 
                     if (enemy.dieSFX != null)
                         player.movementAudio.PlayOneShot(enemy.dieSFX);
+
                     enemy.KillEnemy();
                     names.Add(enemy.name.Replace("(Clone)", string.Empty).Replace("(clone)", string.Empty).Replace("Enemy", string.Empty));
                     

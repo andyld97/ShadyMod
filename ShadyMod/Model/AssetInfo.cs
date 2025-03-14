@@ -108,7 +108,7 @@ namespace ShadyMod.Model
                 Name = "robot",
                 PrefabName = "robot",
                 ItemType = ItemType.Robot,
-                Rarity = 15
+                Rarity = 20
             },
             new AssetInfo()
             {

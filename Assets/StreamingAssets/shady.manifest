@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 4039344622
+CRC: 2965394883
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: c7cbb1dea7fa516d5ea099ab976c8cbb
+    Hash: 42f84be4e5927d4b0610c714836f3122
   TypeTreeHash:
     serializedVersion: 2
-    Hash: 830152ed228b4ecb4ae1da18393aab17
+    Hash: c077578b2711d2c583ceeb86cda3c68f
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: c7cbb1dea7fa516d5ea099ab976c8cbb
+    Hash: 42f84be4e5927d4b0610c714836f3122
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -45,9 +45,13 @@ ClassTypes:
 - Class: 114
   Script: {fileID: 11500000, guid: 1ca002da428252441b92f28d83c8a65f, type: 3}
 - Class: 114
+  Script: {fileID: 11500000, guid: 0e80ae96b3eb9177eea5c8f9dadbcda1, type: 3}
+- Class: 114
   Script: {fileID: 11500000, guid: d5a57f767e5e46a458fc5d3c628d0cbb, type: 3}
 - Class: 114
   Script: {fileID: 11500000, guid: 8233d90336aea43098adf6dbabd606a2, type: 3}
+- Class: 114
+  Script: {fileID: 11500000, guid: d3cecf05b78b173605122a700874719c, type: 3}
 - Class: 115
   Script: {instanceID: 0}
 - Class: 213
@@ -61,6 +65,8 @@ ClassTypes:
 SerializeReferenceClassIdentifiers:
 - AssemblyName: Assembly-CSharp
   ClassName: Battery
+- AssemblyName: Assembly-CSharp
+  ClassName: CompatibleNoun
 - AssemblyName: Unity.ProBuilder
   ClassName: UnityEngine.ProBuilder.AutoUnwrapSettings
 - AssemblyName: Unity.ProBuilder
@@ -76,22 +82,27 @@ SerializeReferenceClassIdentifiers:
 Assets:
 - Assets/AssetStore/shady/Items/head-jedon.asset
 - Assets/AssetStore/shady/Items/shadydoc2.asset
+- Assets/AssetStore/shady/Items/BuyPlayerBox.asset
 - Assets/AssetStore/shady/Prefab/RobotArmLeft.prefab
 - Assets/AssetStore/shady/Items/head-belebt.asset
 - Assets/AssetStore/shady/Prefab/RobotArmRight.prefab
 - Assets/AssetStore/shady/Items/head-andy.asset
 - Assets/AssetStore/shady/Items/robot.asset
+- Assets/AssetStore/shady/Items/Deny.asset
 - Assets/AssetStore/shady/Prefab/PlayerBox.prefab
 - Assets/AssetStore/shady/Items/head-aveloth.asset
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
 - Assets/AssetStore/shady/Items/shadydoc1.asset
 - Assets/AssetStore/shady/Items/playerbox.asset
 - Assets/AssetStore/shady/Items/head-lasse.asset
+- Assets/AssetStore/shady/Items/Confirm.asset
 - Assets/AssetStore/shady/Prefab/RobotBody.prefab
 - Assets/AssetStore/shady/Items/head-patrick.asset
 - Assets/AssetStore/shady/Items/weight.asset
 - Assets/AssetStore/shady/Prefab/Robot.prefab
 - Assets/AssetStore/shady/Items/bad-donut.asset
+- Assets/AssetStore/shady/Items/iTerminalNode.asset
 - Assets/AssetStore/shady/Items/head-paul.asset
 - Assets/AssetStore/shady/Items/donut.asset
+- Assets/AssetStore/shady/Items/CancelPurchase.asset
 Dependencies: []

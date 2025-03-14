@@ -13751,7 +13751,7 @@ MonoBehaviour:
   requiresLineOfSight: 1
   headerText: Robot
   subText: 
-  scrapValue: 0
+  scrapValue: 200
   creatureScanID: -1
   nodeType: 2
 --- !u!1 &8894306714498541031
@@ -14005,7 +14005,7 @@ MonoBehaviour:
   floorYRot: 0
   fallTime: 0
   hasHitGround: 0
-  scrapValue: 0
+  scrapValue: 200
   itemUsedUp: 0
   playerHeldBy: {fileID: 0}
   isPocketed: 0

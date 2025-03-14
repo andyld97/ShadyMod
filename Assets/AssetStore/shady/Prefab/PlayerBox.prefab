@@ -399,6 +399,6 @@ MonoBehaviour:
   requiresLineOfSight: 1
   headerText: A player box for small players
   subText: 
-  scrapValue: 100
+  scrapValue: 250
   creatureScanID: -1
   nodeType: 2

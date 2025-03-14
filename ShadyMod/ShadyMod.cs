@@ -10,6 +10,7 @@ using System.Reflection;
 using Unity.Netcode;
 using UnityEngine;
 using UnityEngine.ProBuilder.MeshOperations;
+using static LethalLib.Modules.ContentLoader;
 
 namespace ShadyMod;
 
@@ -83,11 +84,18 @@ public class ShadyMod : BaseUnityPlugin
                 else if (assetMeta.ItemType == ItemType.PlayerBox)
                 {
                     asset.rotationOffset = new Vector3(180, 0, 270);
-                    asset.positionOffset = new Vector3(0f, 0.42f, -0.2f);
+                    asset.positionOffset = new Vector3(0f, 0.5f, -0.2f);
                 }
 
+                LethalLib.Modules.Utilities.FixMixerGroups(asset.spawnPrefab);
                 LethalLib.Modules.NetworkPrefabs.RegisterNetworkPrefab(asset.spawnPrefab);
                 LethalLib.Modules.Items.RegisterScrap(asset, assetMeta.Rarity, assetMeta.Moons);     
+
+                if (assetMeta.ItemType == ItemType.PlayerBox)
+                {
+                    TerminalNode iTerminalNode = assets.LoadAsset<TerminalNode>("Assets/AssetStore/shady/Items/iTerminalNode.asset");
+                    LethalLib.Modules.Items.RegisterShopItem(asset, null!, null!, iTerminalNode, 150);
+                }
 
                 Logger.LogInfo($"#### Asset {assetMeta.Name} successfully registered!");
             }
@@ -101,9 +109,6 @@ public class ShadyMod : BaseUnityPlugin
         On.GameNetcodeStuff.PlayerControllerB.DropAllHeldItems += PlayerControllerB_DropAllHeldItems;
 
         Logger.LogInfo($"#### {MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
-        
-        // TODO: Bei bestimmten Events: DisablePerks() aufrufen:
-        // -> Crew wird gefeuert
     }
     #endregion
 
