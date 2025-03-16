@@ -1,4 +1,5 @@
 ﻿using GameNetcodeStuff;
+using System;
 using System.Collections.Generic;
 
 namespace ShadyMod.Model
@@ -7,6 +8,8 @@ namespace ShadyMod.Model
     {
         public List<PlayerControllerB> Players { get; set; } = [];
 
-        public PlayerControllerB? PlayerHeldBy { get; set; } = null!;
+        public bool Discard { get; set; } = false;
+
+        public DateTime ResetTime { get; set; } = DateTime.MinValue;
     }
 }

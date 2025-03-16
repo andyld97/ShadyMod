@@ -2,8 +2,11 @@
 using HarmonyLib;
 using ShadyMod.Interactions;
 using ShadyMod.Model;
+using ShadyMod.Network;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.Netcode;
 using UnityEngine;
 
 namespace ShadyMod.Patches
@@ -11,7 +14,7 @@ namespace ShadyMod.Patches
     [HarmonyPatch]
     public class GrabbableObjectPatch
     {
-        public static readonly Dictionary<GrabbableObject, PlayerBoxInfo> playersInBox = [];
+        public static readonly Dictionary<GrabbableObject, PlayerBoxInfo> PlayerBoxes = [];
 
         private const int MAX_PLAYER_IN_BOX = 2;
 
@@ -59,28 +62,31 @@ namespace ShadyMod.Patches
         {
             ShadyMod.DisablePerks(__instance.playerHeldBy);
 
-            if (playersInBox.ContainsKey(__instance))
+            if (PlayerBoxes.ContainsKey(__instance))
             {
-                foreach (var player in playersInBox[__instance].Players.ToList())
+                foreach (var player in PlayerBoxes[__instance].Players.ToList())
                     RemovePlayerFromBox(__instance, player);
             }
-            else
-                ShadyMod.Logger.LogDebug("### PlayerBox not found in playersInBox!");
 
             var item = AssetInfo.GetShadyNameByName(__instance.name);
             if (item != null && item.ItemType == ItemType.McHead)
             {
+                ShadyMod.Logger.LogDebug($"#### Item found: {item.Name}");
+
                 if (item.Name == "head-paul")
                 {
                     __instance.transform.localScale = new Vector3(0.75f, 0.75f, 0.75f);
                     __instance.itemProperties.positionOffset = new Vector3(0f, 0.322f, -0.2f);
 
                     // Check if player is mounted anywhere in any playerbox
-                    foreach (var box in playersInBox)
+                    foreach (var box in PlayerBoxes)
                     {
-                        if (box.Value.Players.Contains(__instance.playerHeldBy))
+                        var player = __instance.playerHeldBy;
+                        if (box.Value.Players.Contains(player))
                         {
-                            RemovePlayerFromBox(box.Key, __instance.playerHeldBy);
+                            ShadyMod.Logger.LogDebug($"#### Player removed due to head dropped!");
+
+                            RemovePlayerFromBox(box.Key, player, true);
                             break;
                         }
                     }
@@ -99,15 +105,12 @@ namespace ShadyMod.Patches
             var item = AssetInfo.GetShadyNameByName(__instance.name);   
             if (item.ItemType == ItemType.PlayerBox)
             {
-                if (playersInBox.ContainsKey(__instance))
-                    playersInBox[__instance].PlayerHeldBy = __instance.playerHeldBy;
-                else 
-                    playersInBox.Add(__instance, new PlayerBoxInfo() { PlayerHeldBy = __instance.playerHeldBy });
-
-                if (playersInBox.ContainsKey(__instance) && playersInBox[__instance].Players.Contains(__instance.playerHeldBy))
+                if (!PlayerBoxes.ContainsKey(__instance))
+                    PlayerBoxes.Add(__instance, new PlayerBoxInfo());
+                else if (PlayerBoxes[__instance].Players.Contains(__instance.playerHeldBy))
                 {
                     // Ensure player will be removed if it is already in the box
-                     RemovePlayerFromBox(__instance, __instance.playerHeldBy);
+                    RemovePlayerFromBox(__instance, __instance.playerHeldBy);
                 }
             }
             else if (item.ItemType == ItemType.McHead)
@@ -117,6 +120,16 @@ namespace ShadyMod.Patches
                     const float scaleFactor = 0.5f;
                     __instance.transform.localScale = new Vector3(__instance.transform.localScale.x * scaleFactor, __instance.transform.localScale.y * scaleFactor, __instance.transform.localScale.z * scaleFactor);
                     __instance.itemProperties.positionOffset = new Vector3(0f, 0.15f, -0.05f);
+
+                    // Check if player is mounted anywhere in any playerbox
+                    foreach (var box in PlayerBoxes)
+                    {
+                        if (box.Value.Players.Contains(__instance.playerHeldBy))
+                        {
+                            RemovePlayerFromBox(box.Key, __instance.playerHeldBy);
+                            break;
+                        }
+                    }
                 }
             }
         }
@@ -129,33 +142,50 @@ namespace ShadyMod.Patches
             if (asset == null || asset.ItemType != ItemType.PlayerBox)
                 return;
 
-            if (!playersInBox.ContainsKey(__instance))
-                playersInBox.Add(__instance, new PlayerBoxInfo() { PlayerHeldBy = __instance.playerHeldBy });
+            var now = DateTime.Now;
 
-            if (__instance.playerHeldBy == null && playersInBox[__instance].Players.Count < MAX_PLAYER_IN_BOX)
+            if (!PlayerBoxes.ContainsKey(__instance))
+                PlayerBoxes.Add(__instance, new PlayerBoxInfo());
+
+            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
             {
-                float posOffset1 = 0f;
-                for (int i = 0; i < StartOfRound.Instance.allPlayerObjects.Length; i++)
+                if (PlayerBoxes[__instance].ResetTime > DateTime.MinValue && (now - PlayerBoxes[__instance].ResetTime).TotalSeconds < 2)
                 {
-                    // Find all nearby players
-                    var player = StartOfRound.Instance.allPlayerScripts[i];
+                    // Debugging: 
+                    // ShadyMod.Logger.LogDebug("#### Skipping player add due to recent reset!");
+                }
+                else
+                {
+                    PlayerBoxes[__instance].ResetTime = DateTime.MinValue;
 
-                    if (Vector3.Distance(player.transform.position, __instance.transform.position) <= 1f && player.IsSmall())
+                    if (!PlayerBoxes[__instance].Discard)
                     {
-                        if (!playersInBox[__instance].Players.Contains(player))
-                            AddPlayerToBox(__instance, player, Vector3.zero);
+                        if (__instance.playerHeldBy == null && PlayerBoxes[__instance].Players.Count < MAX_PLAYER_IN_BOX)
+                        {
+                            for (int i = 0; i < StartOfRound.Instance.allPlayerObjects.Length; i++)
+                            {
+                                // Find all nearby players
+                                var player = StartOfRound.Instance.allPlayerScripts[i];
+
+                                if (Vector3.Distance(player.transform.position, __instance.transform.position) <= 1f && player.IsSmall())
+                                {
+                                    if (!PlayerBoxes[__instance].Players.Contains(player))
+                                        AddPlayerToBox(__instance, player);
+                                }
+
+                                if (PlayerBoxes[__instance].Players.Count >= MAX_PLAYER_IN_BOX)
+                                    break;
+                            }
+                        }
                     }
-
-                    if (playersInBox[__instance].Players.Count >= MAX_PLAYER_IN_BOX)
-                        break;
-
-                    posOffset1 += .1f;
+                    else
+                        ShadyMod.Logger.LogDebug("#### Skipping player add due to discard set!");
                 }
             }
 
             float posOffset = 0f;
             List<PlayerControllerB> toRemove = [];
-            foreach (var player in playersInBox[__instance].Players)
+            foreach (var player in PlayerBoxes[__instance].Players)
             {
                 if (!player.IsSmall())
                 {
@@ -165,39 +195,38 @@ namespace ShadyMod.Patches
 
                 // Update player position
                 player.transform.position = __instance.transform.position + new Vector3(posOffset, 0.0f, posOffset);
-                posOffset += .1f;
+                posOffset += .15f;
             }
 
-            foreach (var player in toRemove)
-                RemovePlayerFromBox(__instance, player);
+            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+            {
+                foreach (var player in toRemove)
+                    RemovePlayerFromBox(__instance, player);
+            }
         }
 
-        // Hint: I tried do this with netcode, but it was not working as expected!
-        // This way each client handles the player box logic on its own, and I can live with the trade of that sometimes if the player
-        // will drop the box the mounted players won't be removed. But either the player can try it again, or the player can drop the head
-        // or switch the slot to be dismounted or grab the box, that should also free the players!
-        // But this way it looks way smoother than using netcode!
-
-        public static void AddPlayerToBox(GrabbableObject __instance, PlayerControllerB player, Vector3 pos)
+        public static void AddPlayerToBox(GrabbableObject __instance, PlayerControllerB player)
         {
-            ShadyMod.Logger.LogWarning($"#### Adding player {player.name} to box!");
+            ShadyMod.Logger.LogDebug($"#### Adding player {player.name} to box!");
 
-            __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
-            playersInBox[__instance].Players.Add(player);
+            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+                __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
+            
+            PerkNetworkHandler.Instance.AddPlayerToBoxServerRpc(__instance.NetworkObjectId, (int)player.playerClientId);
+
             player.playerCollider.enabled = false;  
         }
 
-        public static void RemovePlayerFromBox(GrabbableObject __instance, PlayerControllerB player)
+        public static void RemovePlayerFromBox(GrabbableObject __instance, PlayerControllerB player, bool disablePerks = false)
         {
-            ShadyMod.Logger.LogWarning($"#### Removing player {player.name} from box!");
+            ShadyMod.Logger.LogDebug($"#### Removing player {player.name} from box!");
 
-            __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.dropSFX, 1f);
-            playersInBox[__instance].Players.Remove(player);
+            if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
+                __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.dropSFX, 1f);
 
-            if (playersInBox[__instance].PlayerHeldBy != null)
-                player.transform.position = playersInBox[__instance].PlayerHeldBy!.transform.position + new Vector3(1.25f, 0f, 1.25f);
+            PerkNetworkHandler.Instance.RemovePlayerFromBoxServerRpc(__instance.NetworkObjectId, (int)player.playerClientId, disablePerks);         
 
-            player.playerCollider.enabled = true;   
+            player.playerCollider.enabled = true;
         }
     }
 }

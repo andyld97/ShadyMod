@@ -18,6 +18,9 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
+### v1.0.7 (TBD)
+- Fix PlayerBox-Item NetCode
+
 ### v1.0.6 (14.03.2025)
 - Added new PlayerBox-Item (for player transport)
 - Decreased perk range for Enemy-Kill, Enemy-Small-Perk and Enemy-Stunn-Perk

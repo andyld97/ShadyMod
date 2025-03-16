@@ -38,10 +38,13 @@ namespace ShadyMod.Patches
                 var shadyItem = AssetInfo.GetShadyNameByName(item.name);
                 if (shadyItem.ItemType == ItemType.PlayerBox)
                 {
-                    foreach (var x in GrabbableObjectPatch.playersInBox)
+                    foreach (var x in GrabbableObjectPatch.PlayerBoxes)
                     {
-                        if (x.Value.PlayerHeldBy == __instance)
-                            x.Value.PlayerHeldBy = null;
+                        if (x.Key == item)
+                        {
+                            foreach (var player in x.Value.Players)
+                                GrabbableObjectPatch.RemovePlayerFromBox(x.Key, player);
+                        }
                     }
                 }
             }

@@ -48,9 +48,6 @@ namespace ShadyMod.Perks
                 jumpForce -= 1f;
             }
 
-            //if (!force)
-            //    Helper.SendChatMessage($"{player.playerUsername} einfach kleinste Spieler!");
-
             player.transform.localScale = new Vector3(scale, scale, scale);
             player.gameplayCamera.transform.localPosition = new Vector3(0, scale, 0);
             player.jumpForce = jumpForce;
@@ -65,7 +62,6 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                // NetworkObjectManager.SendEventToClients(nm.ToString());
                 PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
@@ -97,7 +93,6 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                // NetworkObjectManager.SendEventToClients(nm.ToString());
                 PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
@@ -162,7 +157,6 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                // NetworkObjectManager.SendEventToClients(nm.ToString());
                 PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
@@ -193,7 +187,6 @@ namespace ShadyMod.Perks
                     PlayerId = player.actualClientId,
                 };
 
-                // NetworkObjectManager.SendEventToClients(nm.ToString());
                 PerkNetworkHandler.Instance.EventServerRpc(nm.ToString());
             }
 
