@@ -2,7 +2,7 @@
 
 This mod adds 14 Scrap-Items to the game (related to our clan):
 - 7 Minecraft Heads
-- 7 other Items
+- 7 other Items (one of the item can be also bought in the shop!)
 
 With a Minecraft-Head, you can teleport yourself to the player (only works for our clan members)
 
