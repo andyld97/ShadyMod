@@ -18,7 +18,7 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
-### v1.0.7 (TBD)
+### v1.0.7 (16.03.2025)
 - Fix PlayerBox-Item NetCode
 
 ### v1.0.6 (14.03.2025)

@@ -43,7 +43,7 @@ namespace ShadyMod.Patches
                         if (x.Key == item)
                         {
                             foreach (var player in x.Value.Players)
-                                GrabbableObjectPatch.RemovePlayerFromBox(x.Key, player);
+                                GrabbableObjectPatch.RemovePlayerFromBox(x.Key, player, true);
                         }
                     }
                 }
