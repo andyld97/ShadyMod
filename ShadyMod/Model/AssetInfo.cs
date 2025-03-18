@@ -105,6 +105,14 @@ namespace ShadyMod.Model
             new AssetInfo()
             {
                 Moons = LethalLib.Modules.Levels.LevelTypes.All,
+                Name = "shadydoc3",
+                PrefabName = "ShadyDocument3",
+                ItemType = ItemType.ShadyDocument,
+                Rarity = 25,
+            },
+            new AssetInfo()
+            {
+                Moons = LethalLib.Modules.Levels.LevelTypes.All,
                 Name = "robot",
                 PrefabName = "robot",
                 ItemType = ItemType.Robot,

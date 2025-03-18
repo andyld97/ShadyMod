@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 2965394883
+CRC: 2030289612
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 42f84be4e5927d4b0610c714836f3122
+    Hash: ca66e2b3c8a43428dfcead57ea40a433
   TypeTreeHash:
     serializedVersion: 2
     Hash: c077578b2711d2c583ceeb86cda3c68f
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 42f84be4e5927d4b0610c714836f3122
+    Hash: ca66e2b3c8a43428dfcead57ea40a433
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -89,6 +89,7 @@ Assets:
 - Assets/AssetStore/shady/Items/head-andy.asset
 - Assets/AssetStore/shady/Items/robot.asset
 - Assets/AssetStore/shady/Items/Deny.asset
+- Assets/AssetStore/shady/Items/shadydoc3.asset
 - Assets/AssetStore/shady/Prefab/PlayerBox.prefab
 - Assets/AssetStore/shady/Items/head-aveloth.asset
 - Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
