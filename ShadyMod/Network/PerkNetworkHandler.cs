@@ -1,8 +1,6 @@
 ﻿using ShadyMod.Model;
 using ShadyMod.Patches;
 using System;
-using System.Linq;
-using System.Threading.Tasks;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -72,7 +70,7 @@ namespace ShadyMod.Network
                 var grabbableObject = gObj.Value.GetComponent<GrabbableObject>();
                 var player = StartOfRound.Instance.allPlayerScripts[playerObj];
 
-                ShadyMod.Logger.LogDebug($"#### Adding player {player.name} to box (RPC)!");
+                ShadyMod.Logger.LogDebug($"Adding player {player.name} to box (RPC)!");
 
                 if (GrabbableObjectPatch.PlayerBoxes.ContainsKey(grabbableObject))
                 {
@@ -83,6 +81,7 @@ namespace ShadyMod.Network
                     GrabbableObjectPatch.PlayerBoxes.Add(grabbableObject, new PlayerBoxInfo() { Players = [player] });
 
                 player.playerCollider.enabled = false;
+                // grabbableObject.itemProperties.weight = 1.25f * GrabbableObjectPatch.PlayerBoxes[grabbableObject].Players.Count * 0.1f;
             }
         }
 
@@ -119,7 +118,7 @@ namespace ShadyMod.Network
                 var grabbableObject = gObj.Value.GetComponent<GrabbableObject>();
                 var player = StartOfRound.Instance.allPlayerScripts[playerObj];
 
-                ShadyMod.Logger.LogDebug($"#### Removing player {player.name} from box (RPC)!");
+                ShadyMod.Logger.LogDebug($"Removing player {player.name} from box (RPC)!");
 
                 if (GrabbableObjectPatch.PlayerBoxes.ContainsKey(grabbableObject) && GrabbableObjectPatch.PlayerBoxes[grabbableObject].Players.Contains(player))
                 {
@@ -128,6 +127,8 @@ namespace ShadyMod.Network
 
                     player.transform.position = grabbableObject.transform.position + new Vector3(1.25f, 0f, 1.25f);
                     player.playerCollider.enabled = true;
+
+                    // grabbableObject.itemProperties.weight = 1.25f * GrabbableObjectPatch.PlayerBoxes[grabbableObject].Players.Count * 0.1f;
 
                     if (disablePerks)
                         ShadyMod.DisablePerks(player, true);

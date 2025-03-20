@@ -1,7 +1,6 @@
 ﻿using GameNetcodeStuff;
 using ShadyMod.Model;
 using ShadyMod.Network;
-using ShadyMod.Patches;
 using UnityEngine;
 
 namespace ShadyMod.Perks

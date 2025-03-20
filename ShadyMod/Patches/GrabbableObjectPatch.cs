@@ -24,7 +24,7 @@ namespace ShadyMod.Patches
             if (!AssetInfo.IsShadyItem(__instance.name))
                 return;
 
-            ShadyMod.Logger.LogDebug($"#### OnItemActivate called: {__instance.name}!");
+            ShadyMod.Logger.LogDebug($"OnItemActivate called: {__instance.name}!");
 
             var info = AssetInfo.GetShadyNameByName(__instance.name);
             if (info == null)
@@ -65,13 +65,18 @@ namespace ShadyMod.Patches
             if (PlayerBoxes.ContainsKey(__instance))
             {
                 foreach (var player in PlayerBoxes[__instance].Players.ToList())
-                    RemovePlayerFromBox(__instance, player);
+                {
+                    // Player drops all items to ensure that the bug won't exists, otherwise the player will be small even if it drops the head.
+                    // Maybe I can fix that later, but this is also a funny workaround too!
+                    RemovePlayerFromBox(__instance, player, true);
+                    player.DropAllHeldItems(true, false);
+                }
             }
 
             var item = AssetInfo.GetShadyNameByName(__instance.name);
             if (item != null && item.ItemType == ItemType.McHead)
             {
-                ShadyMod.Logger.LogDebug($"#### Item found: {item.Name}");
+                ShadyMod.Logger.LogDebug($"Item found: {item.Name}");
 
                 if (item.Name == "head-paul")
                 {
@@ -84,7 +89,7 @@ namespace ShadyMod.Patches
                         var player = __instance.playerHeldBy;
                         if (box.Value.Players.Contains(player))
                         {
-                            ShadyMod.Logger.LogDebug($"#### Player removed due to head dropped!");
+                            ShadyMod.Logger.LogDebug($"Player removed due to head dropped!");
 
                             RemovePlayerFromBox(box.Key, player, true);
                             break;
@@ -152,7 +157,7 @@ namespace ShadyMod.Patches
                 if (PlayerBoxes[__instance].ResetTime > DateTime.MinValue && (now - PlayerBoxes[__instance].ResetTime).TotalSeconds < 2)
                 {
                     // Debugging: 
-                    // ShadyMod.Logger.LogDebug("#### Skipping player add due to recent reset!");
+                    // ShadyMod.Logger.LogDebug("Skipping player add due to recent reset!");
                 }
                 else
                 {
@@ -179,7 +184,7 @@ namespace ShadyMod.Patches
                         }
                     }
                     else
-                        ShadyMod.Logger.LogDebug("#### Skipping player add due to discard set!");
+                        ShadyMod.Logger.LogDebug("Skipping player add due to discard set!");
                 }
             }
 
@@ -207,19 +212,19 @@ namespace ShadyMod.Patches
 
         public static void AddPlayerToBox(GrabbableObject __instance, PlayerControllerB player)
         {
-            ShadyMod.Logger.LogDebug($"#### Adding player {player.name} to box!");
+            ShadyMod.Logger.LogDebug($"Adding player {player.name} to box!");
 
             if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
                 __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
             
             PerkNetworkHandler.Instance.AddPlayerToBoxServerRpc(__instance.NetworkObjectId, (int)player.playerClientId);
 
-            player.playerCollider.enabled = false;  
+            player.playerCollider.enabled = false;
         }
 
         public static void RemovePlayerFromBox(GrabbableObject __instance, PlayerControllerB player, bool disablePerks = false)
         {
-            ShadyMod.Logger.LogDebug($"#### Removing player {player.name} from box!");
+            ShadyMod.Logger.LogDebug($"Removing player {player.name} from box!");
 
             if (NetworkManager.Singleton.IsHost || NetworkManager.Singleton.IsServer)
                 __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.dropSFX, 1f);

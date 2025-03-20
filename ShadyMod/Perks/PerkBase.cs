@@ -17,7 +17,7 @@ namespace ShadyMod.Perks
         public virtual void Apply(PlayerControllerB player, bool force = false)
         {
             if (CanPerkBeIncreased && ShouldIncreasePerk(player))
-                Helper.DisplayTooltip("Your own head? Great! Your perk will be increased!");
+                Helper.DisplayTooltip($"Your own head? Great! Your perk will be increased! @{player.playerUsername}");
         }
 
         public virtual void Reset(PlayerControllerB player, bool force = false)

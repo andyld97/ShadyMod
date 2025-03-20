@@ -26,7 +26,7 @@ namespace ShadyMod.Perks
                 bool found = false;
                 foreach (var enemy in enemys)
                 {
-                    ShadyMod.Logger.LogDebug($"#### Scaling enemy small: {enemy.name} ...");
+                    ShadyMod.Logger.LogDebug($"Scaling enemy small: {enemy.name} ...");
 
                     float scaleFactor = .5f;
                     if (enemy.name.Contains("ForestGiant", StringComparison.OrdinalIgnoreCase))

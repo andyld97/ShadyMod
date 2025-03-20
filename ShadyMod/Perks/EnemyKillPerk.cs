@@ -27,7 +27,7 @@ namespace ShadyMod.Perks
                 List<string> names = [];
                 foreach (var enemy in enemys)
                 {
-                    ShadyMod.Logger.LogDebug($"#### Killing nearby enemy {enemy.name} ...");
+                    ShadyMod.Logger.LogDebug($"Killing nearby enemy {enemy.name} ...");
 
                     if (enemy.dieSFX != null)
                         player.movementAudio.PlayOneShot(enemy.dieSFX);

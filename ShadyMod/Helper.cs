@@ -59,7 +59,7 @@ namespace ShadyMod
             }
             catch (Exception ex)
             {
-                ShadyMod.Logger.LogError($"#### Failed to send chat message: {ex.Message}");
+                ShadyMod.Logger.LogError($"Failed to send chat message: {ex.Message}");
             }
         }
 

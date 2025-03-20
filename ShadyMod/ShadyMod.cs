@@ -54,7 +54,7 @@ public class ShadyMod : BaseUnityPlugin
         assets = AssetBundle.LoadFromFile(Path.Combine(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "shady"));
         if (assets == null)
         {
-            Logger.LogError("#### Failed to load custom assets."); 
+            Logger.LogError("Failed to load custom assets."); 
             return;
         }
 
@@ -64,7 +64,7 @@ public class ShadyMod : BaseUnityPlugin
 
             if (asset != null)
             {
-                Logger.LogDebug($"#### Loading asset: {assetMeta.Name} with Rarity: {assetMeta.Rarity} ...");
+                Logger.LogDebug($"Loading asset: {assetMeta.Name} with Rarity: {assetMeta.Rarity} ...");
                 asset.canBeGrabbedBeforeGameStart = true;
 
                 if (assetMeta.ItemType == ItemType.McHead)
@@ -97,10 +97,10 @@ public class ShadyMod : BaseUnityPlugin
                     LethalLib.Modules.Items.RegisterShopItem(asset, null!, null!, iTerminalNode, 150);
                 }
 
-                Logger.LogInfo($"#### Asset {assetMeta.Name} successfully registered!");
+                Logger.LogInfo($"Asset {assetMeta.Name} successfully registered!");
             }
             else
-                Logger.LogWarning($"#### Asset {assetMeta.Name} not found!");
+                Logger.LogWarning($"Asset {assetMeta.Name} not found!");
         }
 
         // Assign Events
@@ -108,7 +108,7 @@ public class ShadyMod : BaseUnityPlugin
         On.GameNetcodeStuff.PlayerControllerB.SwitchToItemSlot += PlayerControllerB_SwitchToItemSlot;
         On.GameNetcodeStuff.PlayerControllerB.DropAllHeldItems += PlayerControllerB_DropAllHeldItems;
 
-        Logger.LogInfo($"#### {MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
+        Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
     #endregion
 
@@ -151,7 +151,7 @@ public class ShadyMod : BaseUnityPlugin
             ];
 
             isInitalized = true;
-            Logger.LogInfo("#### Shady Mod Initialization complemeted!");
+            Logger.LogInfo("Shady Mod Initialization complemeted!");
         }
         else
         {
@@ -182,7 +182,7 @@ public class ShadyMod : BaseUnityPlugin
         {
             if (p.ShouldApply(player, item))
             {
-                Logger.LogDebug($"#### [PERK]: Applying perk {p.Name} ...");
+                Logger.LogDebug($"[PERK]: Applying perk {p.Name} ...");
                 p.Apply(player);
             }
         });      
@@ -190,7 +190,7 @@ public class ShadyMod : BaseUnityPlugin
 
     public static void DisablePerks(PlayerControllerB player, bool force = false)
     {
-        Logger.LogDebug("#### [PERK]: Disabling all perks...");
+        Logger.LogDebug("[PERK]: Disabling all perks...");
         Perks.ForEach(p => p.Reset(player, force));
     }
 

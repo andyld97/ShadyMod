@@ -63,7 +63,8 @@ namespace ShadyMod.Patches
                     {
                         if (playerController.playerUsername == nm.PlayerName)
                         {
-                            Debug.Log("#### Player found: " + playerController.playerUsername);
+                            Debug.Log($"Player found: {playerController.playerUsername}");
+
                             var perk = ShadyMod.Perks.FirstOrDefault(p => p.Name == nm.PerkName);
                             if (perk == null)
                                 return;

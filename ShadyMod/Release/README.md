@@ -1,8 +1,8 @@
 ## Shady Mod
 
-This mod adds 14 Scrap-Items to the game (related to our clan):
+This mod adds 15 Scrap-Items to the game (related to [shady]-clan):
 - 7 Minecraft Heads
-- 7 other Items (one of the item can be also bought in the shop!)
+- 8 other Items (one of the item can be also bought in the shop!)
 
 With a Minecraft-Head, you can teleport yourself to the player (only works for our clan members)
 
@@ -17,6 +17,11 @@ Currently this mod only adds Scrap-Items, later on I plan to add enemies too!
 Be a `great asset` and have fun!
 
 ## Changelog
+
+### v1.0.8 (21.03.2025)
+- Reworked Shady Documents
+- Player drops all items when removed from PlayerBox
+- Refactoring and small improvements
 
 ### v1.0.7 (16.03.2025)
 - Fix PlayerBox-Item NetCode

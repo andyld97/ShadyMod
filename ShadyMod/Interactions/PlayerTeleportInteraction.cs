@@ -36,7 +36,7 @@ namespace ShadyMod.Interactions
         public static void Execute(GrabbableObject currentItem, PlayerControllerB self, AssetInfo itemInfo)
         {
             string itemSearchName = currentItem.name.ToLower().Replace("(clone)", string.Empty);
-            ShadyMod.Logger.LogDebug($"#### Item Search Name: {itemSearchName}");
+            ShadyMod.Logger.LogDebug($"Item Search Name: {itemSearchName}");
 
             if (SteamNameMapping.ContainsKey(itemSearchName))
             {
@@ -54,7 +54,7 @@ namespace ShadyMod.Interactions
                         if (player.playerUsername == self.playerUsername)
                             return;
 
-                        ShadyMod.Logger.LogDebug($"#### Player found: {player.playerUsername} ...");
+                        ShadyMod.Logger.LogDebug($"Player found: {player.playerUsername} ...");
 
                         if (player.isPlayerDead)
                         {
@@ -76,7 +76,7 @@ namespace ShadyMod.Interactions
                         else
                         {
                             // Teleport to the player
-                            ShadyMod.Logger.LogDebug($"#### Teleporting player {player.playerUsername}");
+                            ShadyMod.Logger.LogDebug($"Teleporting player {player.playerUsername}");
 
                             HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
                             PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.transform.position.x + teleportOffset, player.transform.transform.position.y, player.transform.position.z + teleportOffset));
@@ -90,15 +90,13 @@ namespace ShadyMod.Interactions
 
                 if (!found)
                 {
-                    ShadyMod.Logger.LogWarning($"#### Target Player \"{targetPlayerName}\" not found to teleport to!");
+                    ShadyMod.Logger.LogWarning($"Target Player \"{targetPlayerName}\" not found to teleport to!");
                     Helper.DisplayTooltip($"Target Player \"{targetPlayerName}\" not found to teleport to (@{self.playerUsername})!");
-                    // ShadyMod.DisablePerks(self);
-                    // self.DestroyItemInSlotAndSync(self.currentItemSlot);
                     return;
                 }
             }
             else
-                ShadyMod.Logger.LogWarning("#### Name-Mapping not found!");
+                ShadyMod.Logger.LogWarning("Name-Mapping not found!");
 
             self.DestroyItemInSlotAndSync(self.currentItemSlot);
             ShadyMod.DisablePerks(self);

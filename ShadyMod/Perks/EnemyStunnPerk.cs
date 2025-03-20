@@ -6,7 +6,7 @@ namespace ShadyMod.Perks
     {
         public override string Name => "Enemy Stunn Perk";
 
-        public override string Description => "Stunns all nearby enemies for 30 seconds";
+        public override string Description => "Stunns all nearby enemies for 10/30 seconds";
 
         public override string TriggerItemName => "jedon";
 
@@ -28,7 +28,7 @@ namespace ShadyMod.Perks
                     if (enemy.stunnedByPlayer != null && enemy.stunnedByPlayer.playerUsername == player.playerUsername)
                         continue;
 
-                    ShadyMod.Logger.LogDebug($"#### Stunning nearby enemy {enemy.name} ...");
+                    ShadyMod.Logger.LogDebug($"Stunning nearby enemy {enemy.name} ...");
                     if (enemy.dieSFX != null)
                         player.movementAudio.PlayOneShot(enemy.dieSFX);
 

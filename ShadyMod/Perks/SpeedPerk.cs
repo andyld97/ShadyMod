@@ -37,14 +37,6 @@ namespace ShadyMod.Perks
                 player.movementSpeed += movementIncrease;
 
             if (!force)
-            {
-                /*if (player.playerUsername.Contains("belebt", System.StringComparison.OrdinalIgnoreCase))
-                    Helper.SendChatMessage($"belebt einfach schneller als Elytra, Wahnsinn (◡‿◡)");
-                else
-                    Helper.SendChatMessage($"{player.playerUsername} einfach schnellste(r)");*/
-            }
-
-            if (!force)
                 isApplied = true;
         }
 
