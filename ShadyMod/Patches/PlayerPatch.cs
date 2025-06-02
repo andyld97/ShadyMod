@@ -36,14 +36,15 @@ namespace ShadyMod.Patches
             {
                 // Also reset player assoc in PlayersInBox
                 var shadyItem = AssetInfo.GetShadyNameByName(item.name);
-                if (shadyItem.ItemType == ItemType.PlayerBox)
+
+                if (shadyItem != null && shadyItem.ItemType == ItemType.PlayerBox)
                 {
-                    foreach (var x in GrabbableObjectPatch.PlayerBoxes)
+                    foreach (var box in GrabbableObjectPatch.PlayerBoxes)
                     {
-                        if (x.Key == item)
+                        if (box.Key == item)
                         {
-                            foreach (var player in x.Value.Players)
-                                GrabbableObjectPatch.RemovePlayerFromBox(x.Key, player, true);
+                            foreach (var player in box.Value.Players)
+                                GrabbableObjectPatch.RemovePlayerFromBox(box.Key, player, true);
                         }
                     }
                 }

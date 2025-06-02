@@ -18,6 +18,9 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
+### v1.0.9 (02.06.2025)
+- Fix NullRef-Exception
+
 ### v1.0.8 (21.03.2025)
 - Reworked Shady Documents
 - Player drops all items when removed from PlayerBox
