@@ -10,7 +10,7 @@ namespace ShadyMod
 {
     public static class Helper
     {
-        private static readonly List<string> ignoreEnemies = ["FlowerSnakeEnemy", "DoublewingedBird"];
+        private static readonly List<string> ignoreEnemies = ["FlowerSnakeEnemy", "DoublewingedBird", "Blob"];
 
         public static string FormatVector3(this Vector3 vector3)
         {
@@ -32,6 +32,9 @@ namespace ShadyMod
             List<EnemyAI> enemies = [];
             foreach (var obj in NetworkManager.Singleton.SpawnManager.SpawnedObjects)
             {
+                if (obj.Value == null)                
+                    continue;
+
                 var enemy = obj.Value.GetComponent<EnemyAI>();
                 if (enemy == null)
                     continue;
