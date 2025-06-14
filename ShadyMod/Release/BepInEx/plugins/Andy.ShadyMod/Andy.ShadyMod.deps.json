@@ -7,7 +7,7 @@
   "targets": {
     ".NETStandard,Version=v2.1": {},
     ".NETStandard,Version=v2.1/": {
-      "Andy.ShadyMod/1.0.9": {
+      "Andy.ShadyMod/1.0.10": {
         "dependencies": {
           "BepInEx.Analyzers": "1.0.8",
           "BepInEx.Core": "5.4.21",
@@ -392,7 +392,7 @@
     }
   },
   "libraries": {
-    "Andy.ShadyMod/1.0.9": {
+    "Andy.ShadyMod/1.0.10": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

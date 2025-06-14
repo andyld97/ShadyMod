@@ -4,7 +4,7 @@
     <PropertyGroup>
         <AssemblyName>Andy.ShadyMod</AssemblyName>
         <Product>ShadyMod</Product>
-        <Version>1.0.9</Version>
+        <Version>1.0.10</Version>
     </PropertyGroup>
 
     <!-- Project Properties -->
