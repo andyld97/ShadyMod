@@ -18,7 +18,7 @@ Be a `great asset` and have fun!
 
 ## Changelog
 
-### v1.0.11 (14.06.2025)
+### v1.0.11 (14.06.2026)
 - v81 Compatibility
 
 ### v1.0.10 (13.06.2025)
