@@ -1,10 +1,10 @@
 {
   "name": "ShadyMod",
-  "version_number": "1.0.10",
+  "version_number": "1.0.11",
   "website_url": "https://github.com/andyld97/ShadyMod",
   "description": "An exclusive mod for the [shady]-clan. Currently Scrap-Items only!",
   "dependencies": [
-    "Evaisa-LethalLib-0.16.2",
+    "Evaisa-LethalLib-1.2.0",
     "BepInEx-BepInExPack-5.4.2100"
   ]
 }

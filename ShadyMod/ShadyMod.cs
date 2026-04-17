@@ -2,6 +2,7 @@ using BepInEx;
 using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
+using LethalLib;
 using ShadyMod.Model;
 using ShadyMod.Perks;
 using System.Collections.Generic;
@@ -110,13 +111,14 @@ public class ShadyMod : BaseUnityPlugin
 
         Logger.LogInfo($"{MyPluginInfo.PLUGIN_GUID} v{MyPluginInfo.PLUGIN_VERSION} has loaded!");
     }
+
     #endregion
 
     #region Player Events
 
-    private void PlayerControllerB_DropAllHeldItems(On.GameNetcodeStuff.PlayerControllerB.orig_DropAllHeldItems orig, PlayerControllerB self, bool itemsFall, bool disconnecting)
+    private void PlayerControllerB_DropAllHeldItems(On.GameNetcodeStuff.PlayerControllerB.orig_DropAllHeldItems orig, PlayerControllerB self, bool itemsFall, bool disconnecting, bool setInShip, bool setInElevator, Vector3 syncedPlayerPosition, Vector3 syncedHeldObjectPosition, Vector3 syncedHeldObjectRotation, Vector3 syncedPlayerCamPosition, Vector3 syncedPlayerCamRotation)
     {
-        orig(self, itemsFall, disconnecting);
+        orig(self, itemsFall, disconnecting, setInShip, setInElevator, syncedPlayerPosition, syncedHeldObjectPosition, syncedHeldObjectRotation, syncedPlayerCamPosition, syncedPlayerCamRotation);
         DisablePerks(self);
     }
 
