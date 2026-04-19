@@ -126,7 +126,9 @@ public class ShadyMod : BaseUnityPlugin
     {
         orig(self, slot, fillSlotWithItem);
         DisablePerks(self);
-        EnablePerk(self.ItemSlots[slot], self);
+
+        if (slot >= 0 && slot < self.ItemSlots.Length)
+            EnablePerk(self.ItemSlots[slot], self);
     }
 
     private void PlayerControllerB_Update(On.GameNetcodeStuff.PlayerControllerB.orig_Update orig, GameNetcodeStuff.PlayerControllerB self)
@@ -157,7 +159,13 @@ public class ShadyMod : BaseUnityPlugin
         }
         else
         {
-            var item = self.ItemSlots[self.currentItemSlot];
+            GrabbableObject? item = null;
+
+            // There is a new item slot at the top right, which you can activate with Tab!
+            // This seems to have an index outisde self.ItemSlots!
+
+            if (self.currentItemSlot >= 0 && self.currentItemSlot < self.ItemSlots.Length)
+                item = self.ItemSlots[self.currentItemSlot];
 
             if (item != null)
             {
