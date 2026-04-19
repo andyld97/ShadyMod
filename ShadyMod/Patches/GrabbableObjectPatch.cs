@@ -15,6 +15,7 @@ namespace ShadyMod.Patches
     public class GrabbableObjectPatch
     {
         public static readonly Dictionary<GrabbableObject, PlayerBoxInfo> PlayerBoxes = [];
+        public static readonly Dictionary<GrabbableObject, int> BookPageAssociation = [];
 
         private const int MAX_PLAYER_IN_BOX = 2;
 
@@ -54,7 +55,35 @@ namespace ShadyMod.Patches
                         __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
                     }
                     break;
-            }
+                case ItemType.ShadyBook:
+                    {
+                        var renderer = __instance.GetComponentInChildren<Renderer>();
+                        if (renderer == null) return;
+
+                        if (!BookPageAssociation.ContainsKey(__instance))
+                            BookPageAssociation.Add(__instance, 2);
+
+                        var mats = renderer.materials;
+                        int page = BookPageAssociation[__instance];
+
+                        mats[2].mainTexture = ShadyMod.BookTextures[page];
+
+                        if (page + 1 < ShadyMod.BookTextures.Count)
+                            mats[3].mainTexture = ShadyMod.BookTextures[page + 1];
+                        else
+                            mats[3].mainTexture = ShadyMod.BookTextures[0];
+
+                        renderer.materials = mats;
+
+                        page += 2;
+
+                        if (page >= ShadyMod.BookTextures.Count)
+                            page = 0;
+
+                        BookPageAssociation[__instance] = page;
+                        break;
+                    }
+            }       
         }
 
         [HarmonyPrefix, HarmonyPatch(typeof(GrabbableObject), nameof(GrabbableObject.DiscardItem))]

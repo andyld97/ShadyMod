@@ -67,10 +67,14 @@ namespace ShadyMod.Interactions
                                 self.KillPlayer(Vector3.zero, false, CauseOfDeath.Fan);
                             else
                             {
-                                Helper.DisplayTooltip($"Lucky you (@{player.playerUsername})! Maybe you can bring back the dead body!");
-                                HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
-                                PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.deadBody.spawnPosition.x + teleportOffset, player.deadBody.spawnPosition.y, player.deadBody.spawnPosition.z + teleportOffset));
-                                ShadyMod.DisablePerks(self);
+                                if (player.deadBody != null)
+                                {
+                                    Helper.DisplayTooltip($"Lucky you (@{player.playerUsername})! Maybe you can bring back the dead body!");
+                                    HUDManager.Instance.ShakeCamera(ScreenShakeType.Small);
+
+                                    PerkNetworkHandler.Instance.TeleportPlayerOutServerRpc((int)self.playerClientId, new Vector3(player.deadBody.spawnPosition.x + teleportOffset, player.deadBody.spawnPosition.y, player.deadBody.spawnPosition.z + teleportOffset));
+                                    ShadyMod.DisablePerks(self);
+                                }
                             }
                         }
                         else

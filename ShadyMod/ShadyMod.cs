@@ -23,6 +23,8 @@ public class ShadyMod : BaseUnityPlugin
     internal static Harmony? Harmony { get; set; }
 
     public static AssetBundle? assets = null;
+
+    public static List<Texture2D> BookTextures = [];
     #endregion
 
     #region Private Memeber
@@ -55,6 +57,12 @@ public class ShadyMod : BaseUnityPlugin
             return;
         }
 
+        for (int i = 1; i <= 6; i++)
+        {
+            Texture2D pageI = assets.LoadAsset<Texture2D>($"Assets/AssetStore/shady/Textures/shadybook/page{i}.png");
+            BookTextures.Add(pageI);
+        }
+
         foreach (var assetMeta in AssetInfo.INSTANCE)
         {
             Item asset = assets.LoadAsset<Item>($"Assets/AssetStore/shady/Items/{assetMeta.Name}.asset");
@@ -68,6 +76,11 @@ public class ShadyMod : BaseUnityPlugin
                 {
                     asset.rotationOffset = new Vector3(180, 0, 270);
                     asset.positionOffset = new Vector3(0f, 0.322f, -0.2f);
+                }
+                else if (assetMeta.ItemType == ItemType.ShadyBook)
+                {
+                    asset.rotationOffset = new Vector3(-180, 0, 0);
+                    asset.positionOffset = new Vector3(0.08f, 0.322f, -0.1f);
                 }
                 else if (assetMeta.ItemType == ItemType.Donut || assetMeta.ItemType == ItemType.BadDonut)
                     asset.positionOffset = new Vector3(0f, 0.15f, -0.1f);
