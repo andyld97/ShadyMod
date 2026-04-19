@@ -14,7 +14,7 @@
       "dependencies": {
         "com.unity.nuget.newtonsoft-json": "2.0.0"
       },
-      "hash": "b30526f7f0267a9e9e54aa6c31a2f86af87120ad"
+      "hash": "11114793c623847ac11cbb5a8751ff35a0f575a8"
     },
     "com.nomnom.unity-project-patcher-bepinex": {
       "version": "https://github.com/nomnomab/unity-project-patcher-bepinex.git",
@@ -47,7 +47,7 @@
       "depth": 0,
       "source": "git",
       "dependencies": {},
-      "hash": "ad2a81ec3068eafd48753df1825a8dd7201ce60c"
+      "hash": "c7923746fa5e95916bf1a4087eceadb72305d5b5"
     },
     "com.unity.burst": {
       "version": "1.8.8",

@@ -79,21 +79,9 @@ crashlytics-build.properties
 *.dll*
 /AssetRipper/*
 /AssetRipperOutput/*
-
-*.meta
-/Assets/TextMesh Pro
-/Assets/LethalCompany/Mods/plugins
-/Assets/ProBuilder Data
-/Assets/Scenes
-/Assets/BepInExUserSettings.asset
-/Assets/LethalCompanyPluginSettings.asset
-/Assets/README.md
-/Assets/UPPatcherUserSettings.asset
+/Assets
 /Lethal Company
-/ShadyMod/obj/Debug/netstandard2.1
-/ShadyMod/bin/Debug/netstandard2.1
-/ShadyMod/obj
-/.vsconfig
-/steps-results.json
 /ProjectSettings
-/ShadyMod/Lib/MMHOOK_Assembly-CSharp.dll
+/ShadyMod/bin/Debug/netstandard2.1
+/steps-results.json
+/ShadyMod/obj
