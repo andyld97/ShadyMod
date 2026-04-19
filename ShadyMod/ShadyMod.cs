@@ -2,16 +2,12 @@ using BepInEx;
 using BepInEx.Logging;
 using GameNetcodeStuff;
 using HarmonyLib;
-using LethalLib;
 using ShadyMod.Model;
 using ShadyMod.Perks;
 using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using Unity.Netcode;
 using UnityEngine;
-using UnityEngine.ProBuilder.MeshOperations;
-using static LethalLib.Modules.ContentLoader;
 
 namespace ShadyMod;
 
@@ -94,8 +90,13 @@ public class ShadyMod : BaseUnityPlugin
 
                 if (assetMeta.ItemType == ItemType.PlayerBox)
                 {
-                    TerminalNode iTerminalNode = assets.LoadAsset<TerminalNode>("Assets/AssetStore/shady/Items/iTerminalNode.asset");
-                    LethalLib.Modules.Items.RegisterShopItem(asset, null!, null!, iTerminalNode, 150);
+                    TerminalNode playerBoxTerminalNote = assets.LoadAsset<TerminalNode>("Assets/AssetStore/shady/Items/playerBoxTerminalNode.asset");
+                    LethalLib.Modules.Items.RegisterShopItem(asset, null!, null!, playerBoxTerminalNote, 100);
+                }
+                else if (assetMeta.ItemType == ItemType.ShadyBanner)
+                {
+                    TerminalNode bannerTerminalNote = assets.LoadAsset<TerminalNode>("Assets/AssetStore/shady/Items/shadyBannerTerminalNote.asset");
+                    LethalLib.Modules.Items.RegisterShopItem(asset, null!, null!, bannerTerminalNote, 50);
                 }
 
                 Logger.LogInfo($"Asset {assetMeta.Name} successfully registered!");

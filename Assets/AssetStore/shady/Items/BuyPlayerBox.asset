@@ -15,9 +15,9 @@ MonoBehaviour:
   displayText: 'Ordered [variableAmount] PlayerBoxes. Your new balance is [playerCredits].
 
 
-    Our
-    contractors enjoy fast, free shipping while on the job! Any purchased items will
-    arrive hourly at your approximate location.'
+    Die
+    [shady]-Bestellung ist unteregs, bitte haben Sie Geduld! Die Lieferanten klingeln
+    manchmal nicht, oder die Ware kommt defekt an, good Luck!'
   terminalEvent: 
   clearPreviousText: 1
   maxCharactersToType: 35
