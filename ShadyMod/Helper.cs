@@ -2,7 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using TMPro;
 using Unity.Netcode;
 using UnityEngine;
 
@@ -76,7 +75,7 @@ namespace ShadyMod
         /// </summary>
         private static void UpdateChatText()
         {
-            ((TMP_Text)HUDManager.Instance.chatText).text = string.Join("\n", HUDManager.Instance.ChatMessageHistory);
+            HUDManager.Instance.chatText.text = string.Join("\n", HUDManager.Instance.ChatMessageHistory);
         }
     }
 }
