@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1542467663
+CRC: 1587909135
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: e3bef2061a95223b4282d193c65093d5
+    Hash: 93554b85efa77bc73412855b2623574f
   TypeTreeHash:
     serializedVersion: 2
     Hash: c077578b2711d2c583ceeb86cda3c68f
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: e3bef2061a95223b4282d193c65093d5
+    Hash: 93554b85efa77bc73412855b2623574f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -103,7 +103,6 @@ Assets:
 - Assets/AssetStore/shady/Textures/shadybook/page3.png
 - Assets/AssetStore/shady/Items/shadydoc1.asset
 - Assets/AssetStore/shady/Items/playerbox.asset
-- Assets/AssetStore/shady/Scenes/TestScene/head-lasse.asset
 - Assets/AssetStore/shady/Items/Confirm.asset
 - Assets/AssetStore/shady/Prefab/RobotBody.prefab
 - Assets/AssetStore/shady/Items/head-patrick.asset
