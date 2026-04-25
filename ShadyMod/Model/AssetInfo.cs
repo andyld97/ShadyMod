@@ -140,7 +140,7 @@ namespace ShadyMod.Model
                 Name = "shadybook",
                 PrefabName = "shadybook",
                 ItemType = ItemType.ShadyBook,
-                Rarity = 25
+                Rarity = 15
             }
         ];
 

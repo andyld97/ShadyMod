@@ -1,15 +1,15 @@
 ManifestFileVersion: 0
-CRC: 1587909135
+CRC: 2401920447
 Hashes:
   AssetFileHash:
     serializedVersion: 2
-    Hash: 93554b85efa77bc73412855b2623574f
+    Hash: efc526175522217a52a6e3260c34765f
   TypeTreeHash:
     serializedVersion: 2
     Hash: c077578b2711d2c583ceeb86cda3c68f
   IncrementalBuildHash:
     serializedVersion: 2
-    Hash: 93554b85efa77bc73412855b2623574f
+    Hash: efc526175522217a52a6e3260c34765f
 HashAppended: 0
 ClassTypes:
 - Class: 1
@@ -81,39 +81,51 @@ SerializeReferenceClassIdentifiers:
   ClassName: UnityEngine.ProBuilder.UnwrapParameters
 Assets:
 - Assets/AssetStore/shady/Items/head-jedon.asset
-- Assets/AssetStore/shady/Items/shadydoc2.asset
 - Assets/AssetStore/shady/Items/BuyPlayerBox.asset
-- Assets/AssetStore/shady/Prefab/RobotArmLeft.prefab
 - Assets/AssetStore/shady/Items/head-belebt.asset
-- Assets/AssetStore/shady/Items/shadybook.asset
 - Assets/AssetStore/shady/Prefab/RobotArmRight.prefab
-- Assets/AssetStore/shady/Items/head-andy.asset
-- Assets/AssetStore/shady/Items/playerBoxTerminalNode.asset
+- Assets/AssetStore/shady/Items/robot.asset
 - Assets/AssetStore/shady/Items/Deny.asset
 - Assets/AssetStore/shady/Textures/shadybook/page2.png
 - Assets/AssetStore/shady/Items/shadydoc3.asset
-- Assets/AssetStore/shady/Textures/shadybook/page6.png
 - Assets/AssetStore/shady/Prefab/PlayerBox.prefab
-- Assets/AssetStore/shady/Items/head-lasse.asset
-- Assets/AssetStore/shady/Items/robot.asset
-- Assets/AssetStore/shady/Items/shadybanner.asset
+- Assets/AssetStore/shady/Textures/shadybook/page10.png
 - Assets/AssetStore/shady/Items/head-aveloth.asset
+- Assets/AssetStore/shady/Textures/shadybook/page15.png
 - Assets/AssetStore/shady/Textures/shadybook/page4.png
-- Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
+- Assets/AssetStore/shady/Textures/shadybook/page11.png
 - Assets/AssetStore/shady/Textures/shadybook/page3.png
-- Assets/AssetStore/shady/Items/shadydoc1.asset
-- Assets/AssetStore/shady/Items/playerbox.asset
+- Assets/AssetStore/shady/Prefab/PerkNetworkHandler.prefab
+- Assets/AssetStore/shady/Textures/shadybook/page16.png
 - Assets/AssetStore/shady/Items/Confirm.asset
 - Assets/AssetStore/shady/Prefab/RobotBody.prefab
-- Assets/AssetStore/shady/Items/head-patrick.asset
+- Assets/AssetStore/shady/Textures/shadybook/page17.png
 - Assets/AssetStore/shady/Items/weight.asset
-- Assets/AssetStore/shady/Items/BuyShadyBanner.asset
 - Assets/AssetStore/shady/Textures/shadybook/page1.png
-- Assets/AssetStore/shady/Items/shadyBannerTerminalNote.asset
-- Assets/AssetStore/shady/Items/bad-donut.asset
-- Assets/AssetStore/shady/Prefab/Robot.prefab
-- Assets/AssetStore/shady/Items/head-paul.asset
-- Assets/AssetStore/shady/Textures/shadybook/page5.png
+- Assets/AssetStore/shady/Items/playerBoxTerminalNode.asset
 - Assets/AssetStore/shady/Items/donut.asset
 - Assets/AssetStore/shady/Items/CancelPurchase.asset
+- Assets/AssetStore/shady/Items/shadydoc2.asset
+- Assets/AssetStore/shady/Prefab/RobotArmLeft.prefab
+- Assets/AssetStore/shady/Textures/shadybook/page9.png
+- Assets/AssetStore/shady/Textures/shadybook/page14.png
+- Assets/AssetStore/shady/Items/shadybook.asset
+- Assets/AssetStore/shady/Items/head-andy.asset
+- Assets/AssetStore/shady/Textures/shadybook/page18.png
+- Assets/AssetStore/shady/Textures/shadybook/page6.png
+- Assets/AssetStore/shady/Items/head-lasse.asset
+- Assets/AssetStore/shady/Textures/shadybook/page8.png
+- Assets/AssetStore/shady/Items/shadybanner.asset
+- Assets/AssetStore/shady/Items/shadydoc1.asset
+- Assets/AssetStore/shady/Items/playerbox.asset
+- Assets/AssetStore/shady/Textures/shadybook/page12.png
+- Assets/AssetStore/shady/Textures/shadybook/page7.png
+- Assets/AssetStore/shady/Textures/shadybook/page13.png
+- Assets/AssetStore/shady/Items/head-patrick.asset
+- Assets/AssetStore/shady/Items/BuyShadyBanner.asset
+- Assets/AssetStore/shady/Prefab/Robot.prefab
+- Assets/AssetStore/shady/Items/shadyBannerTerminalNote.asset
+- Assets/AssetStore/shady/Items/bad-donut.asset
+- Assets/AssetStore/shady/Items/head-paul.asset
+- Assets/AssetStore/shady/Textures/shadybook/page5.png
 Dependencies: []

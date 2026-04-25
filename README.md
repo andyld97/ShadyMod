@@ -1,6 +1,6 @@
 # Lethal Company ShadyMod
 
-- Adds 15 Scrap-Items to the game!
+- Adds 17 Scrap-Items to the game!
 - Items have different functions like perks, teleport or player transport!
 - Adds a playerbox to transport up to two small players!
 

@@ -80,10 +80,12 @@ namespace ShadyMod.Patches
                         if (page >= ShadyMod.BookTextures.Count)
                             page = 0;
 
+                        __instance.gameObject.GetComponent<AudioSource>().PlayOneShot(__instance.itemProperties.grabSFX, 1f);
+
                         BookPageAssociation[__instance] = page;
                         break;
                     }
-            }       
+            }
         }
 
         [HarmonyPrefix, HarmonyPatch(typeof(GrabbableObject), nameof(GrabbableObject.DiscardItem))]

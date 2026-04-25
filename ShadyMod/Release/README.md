@@ -1,8 +1,8 @@
 ## Shady Mod
 
-This mod adds 15 Scrap-Items to the game (related to [shady]-clan):
+This mod adds 17 Scrap-Items to the game (related to [shady]-clan):
 - 7 Minecraft Heads
-- 8 other Items (one of the item can be also bought in the shop!)
+- 10 other Items (one of the item can be also bought in the shop!)
 
 With a Minecraft-Head, you can teleport yourself to the player (only works for our clan members)
 
@@ -12,13 +12,16 @@ Some perks are increased if a player holds it's own head!
 
 A big thank you to all team members, and especially to belebt, for her invaluable help with testing!
 
-Currently this mod only adds Scrap-Items, later on I plan to add enemies too!
-
 Be a `great asset` and have fun!
 
 ## Changelog
 
-### v1.0.11 (14.06.2026)
+### v1.0.12 (25.04.2026)
+- Important bug fix: Pressing tab now works again
+- Fix: Donut-Interaction
+- Added new items!
+
+### v1.0.11 (14.04.2026)
 - v81 Compatibility
 
 ### v1.0.10 (13.06.2025)

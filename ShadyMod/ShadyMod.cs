@@ -57,7 +57,7 @@ public class ShadyMod : BaseUnityPlugin
             return;
         }
 
-        for (int i = 1; i <= 6; i++)
+        for (int i = 1; i <= 18; i++)
         {
             Texture2D pageI = assets.LoadAsset<Texture2D>($"Assets/AssetStore/shady/Textures/shadybook/page{i}.png");
             BookTextures.Add(pageI);

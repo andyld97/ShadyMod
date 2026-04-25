@@ -10,16 +10,17 @@ namespace ShadyMod.Interactions
             if (itemInfo.ItemType == ItemType.BadDonut)
             {
                 Helper.DisplayTooltip("That was a bad idea ...");
-                self.DamagePlayer(50, true, true);
-                self.DropAllHeldItems(true);
+                //self.DamagePlayer(50, true, true);
+                //self.DropAllHeldItems(true);
+                self.KillPlayer(new UnityEngine.Vector3(0, 0), true, CauseOfDeath.Suffocation);
             }
             else
             {
                 self.MakeCriticallyInjured(false);
+                self.DestroyItemInSlotAndSync(self.currentItemSlot);
             }
 
-            ShadyMod.DisablePerks(self);
-            self.DestroyItemInSlotAndSync(self.currentItemSlot);
+            ShadyMod.DisablePerks(self);            
         }
     }
 }
